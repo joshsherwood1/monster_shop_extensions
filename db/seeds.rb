@@ -9,6 +9,15 @@ Review.destroy_all
 Item.destroy_all
 Merchant.destroy_all
 
+merchant_employee = User.create(  name: "alec",
+                    address: "234 Main",
+                    city: "Denver",
+                    state: "CO",
+                    zip: 80204,
+                    email: "alec@gmail.com",
+                    password: "password",
+                    role: 2)
+
 #merchants
 bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
