@@ -1,4 +1,5 @@
 class CartController < ApplicationController
+  before_action :require_cart, only: [:show]
 
   def add_item
     item = Item.find(params[:item_id])
@@ -34,5 +35,11 @@ class CartController < ApplicationController
       return remove_item if cart.quantity_zero?(params[:item_id])
     end
     redirect_to "/cart"
+  end
+
+  private
+
+  def require_cart
+    render file: '/public/404' if current_admin?
   end
 end
