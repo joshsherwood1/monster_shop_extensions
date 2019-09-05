@@ -15,20 +15,13 @@ describe "As a mechant employee or merchant admin" do
             .and_return(merchant_employee)
 
     visit '/items'
-    
 
-    within 'nav' do
-      expect(page).to have_link("Dashboard")
-      click_link("Dashboard")
+    within '.topnav' do
+      expect(page).to have_link("Merchant Dashboard")
     end
 
     #not sure if this is the right path
-    expect(current_path).to eq("/merchant/dashboard")
+    #expect(current_path).to eq("/merchant/dashboard")
 
   end
 end
-
-# As a merchant employee or admin
-# I see the same links as a regular user
-# Plus the following links:
-# - a link to my merchant dashboard ("/merchant")
