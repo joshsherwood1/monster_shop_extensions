@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   #I think login action is like a new action, could also call it new
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
+  delete "/logout", to: "sessions#destroy"
 
   namespace :merchant do
     get '/', to: "dashboard#index"
