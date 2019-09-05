@@ -16,6 +16,7 @@ describe "As a mechant employee or merchant admin" do
 
     visit '/items'
     
+
     within 'nav' do
       expect(page).to have_link("Dashboard")
       click_link("Dashboard")

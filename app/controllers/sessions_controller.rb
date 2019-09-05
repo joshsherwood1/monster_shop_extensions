@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     end
 
     def create
-      user = User.find_by(name: params[:name])
+      user = User.find_by(email: params[:email])
       flash[:success] = "Login in successful!"
       if user && user.authenticate(params[:password])
         session[:user_id] = user.id
@@ -13,5 +13,11 @@ class SessionsController < ApplicationController
       else
         render 'users/login'
       end
+    end
+
+    private
+
+    def session_params
+      
     end
 end
