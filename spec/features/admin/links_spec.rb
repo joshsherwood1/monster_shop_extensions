@@ -8,9 +8,6 @@ describe "As an Admin User" do
 
   it "I see the same links as a regular user, a link to admin dashboard, and a link to show all users. I do not see a link to shopping cart." do
     visit '/login'
-    fill_in 'Email', with: @admin.email
-    fill_in 'Password', with: @admin.password
-    click_button 'Log In'
 
     within 'nav' do
       expect(page).to have_link('All Merchants')

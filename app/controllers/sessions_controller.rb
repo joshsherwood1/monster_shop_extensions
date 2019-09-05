@@ -5,13 +5,13 @@ class SessionsController < ApplicationController
     end
 
     def create
-      user = User.find_by(name: params[:name])
-      flash[:success] = "Login in successful!"
-      if user && user.authenticate(params[:password])
-        session[:user_id] = user.id
-        redirect_to '/'
-      else
-        render 'users/login'
-      end
+      # user = User.find_by(name: params[:name])
+      # if user && user.authenticate(params[:password])
+      #   session[:user_id] = user.id
+      #   flash[:success] = "Login in successful!"
+      #   redirect_to '/'
+      # else
+      #   render 'users/login'
+      # end
     end
 end
