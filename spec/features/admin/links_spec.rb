@@ -7,7 +7,11 @@ describe "As an Admin User" do
   end
 
   it "I see the same links as a regular user, a link to admin dashboard, and a link to show all users. I do not see a link to shopping cart." do
+<<<<<<< HEAD
     visit '/login'
+=======
+    visit '/'
+>>>>>>> f8fa27736c58ca5fa3e6e43164fde5f8ef74d3b3
 
     within 'nav' do
       expect(page).to have_link('All Merchants')
