@@ -13,7 +13,12 @@
       <section class="topnav-index">
         <%= link_to "All Merchants", "/merchants"%>
         <%= link_to "All Items", "/items"%>
-        <%= link_to "Cart: #{cart.total_items}", "/cart" %>
+        <% if current_admin? %>
+          <%= link_to 'Admin Dashboard', '/admin' %>
+          <%= link_to 'Users', '/admin/users' %>
+        <% else %>
+          <%= link_to "Cart: #{cart.total_items}", "/cart" %>
+        <% end %>
       </section>
       <section id="home-pic">
         <%= link_to "/" do %>
