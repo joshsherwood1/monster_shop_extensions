@@ -34,11 +34,15 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     @user.update(user_params)
-    redirect_to '/profile'
     if user_params.include?(:password)
+      redirect_to '/profile'
       flash[:success] = 'Your password has been updated'
-    else
+    elsif @user.save
+      redirect_to '/profile'
       flash[:success] = 'Your profile has been updated'
+    else
+      redirect_to '/profile/edit'
+      flash[:error] = @user.errors.full_messages.uniq
     end
   end
 

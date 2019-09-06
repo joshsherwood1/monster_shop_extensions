@@ -40,7 +40,6 @@ describe 'User Registration' do
 
       visit '/register'
 
-
       click_button "Submit"
 
       expect(page).to have_content("Name can't be blank")
