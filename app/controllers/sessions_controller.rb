@@ -17,7 +17,8 @@ class SessionsController < ApplicationController
           redirect_to '/profile'
         end
       else
-        render '/login'
+        flash[:error] = "Login information incorrect"
+        redirect_to '/login'
       end
     end
 end
