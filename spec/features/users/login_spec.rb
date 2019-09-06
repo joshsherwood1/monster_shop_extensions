@@ -42,7 +42,7 @@ describe "When visitor goes to login page" do
     expect(page).to have_content("Login in successful!")
   end
 
-  it "merchants can login and are directed to correct page" do
+  it "admins can login and are directed to correct page" do
     user_2 = User.create(  name: "alec",
       address: "234 Main",
       city: "Denver",
@@ -63,7 +63,7 @@ describe "When visitor goes to login page" do
     expect(page).to have_content("Login in successful!")
   end
 
-  it "merchants can login and are directed to correct page" do
+  it "users can not login with wrong information" do
     user_2 = User.create(  name: "alec",
       address: "234 Main",
       city: "Denver",
