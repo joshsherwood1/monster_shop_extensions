@@ -16,11 +16,22 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = current_user
   end
 
+  def edit
+    @user = current_user
+  end
 
-private
-  #Need to make sure that user_params doesn't store password
+  def update
+    @user = current_user
+    @user.update(user_params)
+    redirect_to '/profile'
+    flash[:success] = 'Your profile has been updated'
+  end
+
+  private
+
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password)
   end
