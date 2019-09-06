@@ -1,7 +1,18 @@
 class SessionsController < ApplicationController
 
     def new
-      render 'users/login'
+      if current_user
+        flash[:error] = "Already logged in"
+        if current_merchant_employee? || current_merchant_admin?
+          redirect_to '/merchant'
+        elsif current_admin?
+          redirect_to '/admin'
+        else
+          redirect_to '/profile'
+        end
+      else
+        render '/users/login'
+      end
     end
 
     def create
@@ -17,7 +28,8 @@ class SessionsController < ApplicationController
           redirect_to '/profile'
         end
       else
-        render '/login'
+        flash[:error] = "Login information incorrect"
+        redirect_to '/login'
       end
     end
-end
+  end

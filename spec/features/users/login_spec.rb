@@ -42,7 +42,7 @@ describe "When visitor goes to login page" do
     expect(page).to have_content("Login in successful!")
   end
 
-  it "merchants can login and are directed to correct page" do
+  it "admins can login and are directed to correct page" do
     user_2 = User.create(  name: "alec",
       address: "234 Main",
       city: "Denver",
@@ -61,5 +61,26 @@ describe "When visitor goes to login page" do
     click_button "Log In"
     expect(current_path).to eq("/admin")
     expect(page).to have_content("Login in successful!")
+  end
+
+  it "users can not login with wrong information" do
+    user_2 = User.create(  name: "alec",
+      address: "234 Main",
+      city: "Denver",
+      state: "CO",
+      zip: 80204,
+      email: "alec@gmail.com",
+      password: "password",
+      role: 3
+    )
+
+    visit '/login'
+
+    fill_in :email, with: user_2.email
+    fill_in :password, with: "bad"
+
+    click_button "Log In"
+    expect(current_path).to eq("/login")
+    expect(page).to have_content("Login information incorrect")
   end
 end
