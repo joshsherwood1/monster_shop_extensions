@@ -59,5 +59,23 @@ RSpec.describe "User Profile" do
       expect(page).to have_content(zip)
       expect(page).to have_content(email)
     end
+
+    it 'I see a link to edit my password. I fill out the form and am returned to my profile. I see a flash message confirming the update.' do
+      visit '/profile'
+      click_link 'Edit Password'
+
+      expect(current_path).to eq('/profile/password_edit')
+
+      password = 'password'
+      password_confirmation = 'password'
+
+      fill_in :password, with: password
+      fill_in :password_confirmation, with: password_confirmation
+
+      click_button 'Submit'
+
+      expect(current_path).to eq('/profile')
+      expect(page).to have_content('Your password has been updated')
+    end
   end
 end

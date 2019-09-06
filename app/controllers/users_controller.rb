@@ -19,8 +19,6 @@ class UsersController < ApplicationController
     end
   end
 
-
-
   def show
     @user = current_user
   end
@@ -29,14 +27,26 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
+  def password_edit
+    @user = current_user
+  end
+
   def update
     @user = current_user
     @user.update(user_params)
     redirect_to '/profile'
-    flash[:success] = 'Your profile has been updated'
+    if user_params.include?(:password)
+      flash[:success] = 'Your password has been updated'
+    else
+      flash[:success] = 'Your profile has been updated'
+    end
   end
 
   private
+
+  def require_user
+    render file: "/public/404" unless current_user
+  end
 
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password)
