@@ -6,13 +6,13 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.create(user_params)
-    if user.save
-      session[:user_id] = user.id
-      flash[:success] = "Welcome, #{user.name}!"
+    @user = User.create(user_params)
+    if @user.save
+      session[:user_id] = @user.id
+      flash[:success] = "Welcome, #{@user.name}!"
       redirect_to "/profile"
     else
-      flash[:error] = user.errors.full_messages.uniq
+      flash[:error] = @user.errors.full_messages.uniq
       #this might need to be changed after user can login
       #consider using render
       redirect_to '/register'
