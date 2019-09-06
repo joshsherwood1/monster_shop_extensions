@@ -10,7 +10,7 @@ describe "When a user who is already logged in visits login page" do
       email: "1@gmail.com",
       password: "password"
     )
-    @merchant_user = User.create!(  name: "alec",
+    @merchant_user = User.create!(  name: "josh",
       address: "234 Main",
       city: "Denver",
       state: "CO",
@@ -19,7 +19,7 @@ describe "When a user who is already logged in visits login page" do
       password: "password",
       role: 1
     )
-    @admin_user = User.create!(  name: "alec",
+    @admin_user = User.create!(  name: "chris",
       address: "234 Main",
       city: "Denver",
       state: "CO",
