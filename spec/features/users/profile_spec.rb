@@ -5,6 +5,7 @@ RSpec.describe "User Profile" do
     before :each do
       @user = User.create(name: 'Christopher', address: '123 Oak Ave', city: 'Denver', state: 'CO', zip: 80021, email: 'christopher@email.com', password: 'p@ssw0rd', role: 0)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+      @user_2 = User.create(name: 'Christopher', address: '123 Oak Ave', city: 'Denver', state: 'CO', zip: 80021, email: 'ck@email.com', password: 'p@ssw0rd', role: 0)
     end
 
     it 'I visit my profile page and see all my profile data except my password. I see a link to edit my profile data.' do
@@ -23,7 +24,6 @@ RSpec.describe "User Profile" do
     it 'I click the Edit Profile link. I see a prepopulate form with my current info. I submit the form and am returned to my profile page with my new info.' do
       visit '/profile'
       click_link 'Edit Profile'
-
       expect(current_path).to eq('/profile/edit')
 
       expect(find_field(:name).value).to eq(@user.name)
@@ -32,7 +32,6 @@ RSpec.describe "User Profile" do
       expect(find_field(:state).value).to eq(@user.state)
       expect(find_field(:zip).value).to eq(@user.zip.to_s)
       expect(find_field(:email).value).to eq(@user.email)
-
 
       name = 'Christopher'
       address = '456 1st St'
@@ -58,6 +57,36 @@ RSpec.describe "User Profile" do
       expect(page).to have_content(state)
       expect(page).to have_content(zip)
       expect(page).to have_content(email)
+    end
+
+    it 'I see a link to edit my password. I fill out the form and am returned to my profile. I see a flash message confirming the update.' do
+      visit '/profile'
+      click_link 'Edit Password'
+
+      expect(current_path).to eq('/profile/password_edit')
+
+      password = 'password'
+      password_confirmation = 'password'
+
+      fill_in :password, with: password
+      fill_in :password_confirmation, with: password_confirmation
+
+      click_button 'Submit'
+
+      expect(current_path).to eq('/profile')
+      expect(page).to have_content('Your password has been updated')
+    end
+
+    it 'I must use a unique email address when updating my profile' do
+      visit '/profile/edit'
+
+      email = 'christopher@email.com'
+
+      fill_in "Email", with: email
+      click_button 'Update Profile'
+
+      expect(current_path).to eq('/profile/edit')
+      expect(page).to have_content("Email has already been taken")
     end
   end
 end
