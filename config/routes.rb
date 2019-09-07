@@ -41,6 +41,7 @@ Rails.application.routes.draw do
 
   get "/profile", to: "users#show"
   get '/profile/edit', to: 'users#edit'
+  get '/profile/password_edit', to: 'users#password_edit'
   patch '/profile', to: 'users#update'
 
   #I think login action is like a new action, could also call it new
