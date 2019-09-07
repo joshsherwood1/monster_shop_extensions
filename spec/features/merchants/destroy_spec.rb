@@ -2,6 +2,16 @@ require 'rails_helper'
 
 RSpec.describe "As a visitor" do
   describe "When I visit a merchant show page" do
+    before :each do
+      @user = User.create!(  name: "alec",
+        address: "234 Main",
+        city: "Denver",
+        state: "CO",
+        zip: 80204,
+        email: "alec@gmail.com",
+        password: "password"
+      )
+    end
     it "I can delete a merchant" do
       bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203)
 
@@ -26,6 +36,12 @@ RSpec.describe "As a visitor" do
     end
 
     it "I can't delete a merchant that has orders" do
+      visit '/login'
+
+      fill_in :email, with: @user.email
+      fill_in :password, with: @user.password
+
+      click_button "Log In"
       mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       brian = Merchant.create(name: "Brian's Dog Shop", address: '123 Dog Rd.', city: 'Denver', state: 'CO', zip: 80204)
@@ -35,7 +51,6 @@ RSpec.describe "As a visitor" do
       pencil = mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
       pulltoy = brian.items.create(name: "Pulltoy", description: "It'll never fall apart!", price: 14, image: "https://www.valupets.com/media/catalog/product/cache/1/image/650x/040ec09b1e35df139433887a97daa66f/l/a/large_rubber_dog_pull_toy.jpg", inventory: 7)
 
-
       visit "/items/#{paper.id}"
       click_on "Add To Cart"
       visit "/items/#{paper.id}"
@@ -44,29 +59,18 @@ RSpec.describe "As a visitor" do
       click_on "Add To Cart"
       visit "/items/#{pencil.id}"
       click_on "Add To Cart"
-
       visit "/cart"
       click_on "Checkout"
 
-      name = "Bert"
-      address = "123 Sesame St."
-      city = "NYC"
-      state = "New York"
-      zip = 10001
-
-      fill_in :name, with: name
-      fill_in :address, with: address
-      fill_in :city, with: city
-      fill_in :state, with: state
-      fill_in :zip, with: zip
+      fill_in :name, with: @user.name
+      fill_in :address, with: @user.address
+      fill_in :city, with: @user.city
+      fill_in :state, with: @user.state
+      fill_in :zip, with: @user.zip
 
       click_button "Create Order"
-
       visit "/merchants/#{meg.id}"
       expect(page).to_not have_link("Delete Merchant")
-
-      # visit "/merchants/#{brian.id}"
-      # expect(page).to have_link("Delete Merchant")
     end
   end
 end
