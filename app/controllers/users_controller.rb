@@ -19,10 +19,12 @@ class UsersController < ApplicationController
     end
   end
 
+
+
   def show
     @user = current_user
   end
-
+  
   def edit
     @user = current_user
   end
@@ -46,12 +48,15 @@ class UsersController < ApplicationController
     end
   end
 
+  
   private
 
   def require_user
     render file: "/public/404" unless current_user
   end
 
+  #Need to make sure that user_params doesn't store password
+  
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password)
   end
