@@ -23,7 +23,7 @@ describe("Order Creation") do
       fill_in :password, with: @user.password
 
       click_button "Log In"
-      
+
       visit "/items/#{@paper.id}"
       click_on "Add To Cart"
       visit "/items/#{@paper.id}"
