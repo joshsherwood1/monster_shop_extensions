@@ -34,7 +34,7 @@
           <%= link_to "Profile", "/profile" %>
           <p>Logged in as <%= current_user.name %></p>
           <% if current_merchant_admin? || current_merchant_employee? %>
-            <%= link_to 'Merchant Dashboard', '/merchant/dashboard' %>
+            <%= link_to 'Merchant Dashboard', '/merchant' %>
           <% end %>
         <% else %>
         <%= link_to 'Login', '/login' %>
