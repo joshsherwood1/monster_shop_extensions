@@ -22,6 +22,7 @@ describe "When visitor goes to login page" do
   end
 
   it "merchants can login and are directed to correct page" do
+    bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 11234)
     user_1 = User.create(  name: "alec",
       address: "234 Main",
       city: "Denver",
@@ -29,7 +30,8 @@ describe "When visitor goes to login page" do
       zip: 80204,
       email: "alec@gmail.com",
       password: "password",
-      role: 1
+      role: 1,
+      merchant_id: bike_shop.id
     )
 
     visit '/login'
