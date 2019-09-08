@@ -1,12 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
-<<<<<<< HEAD
-  #use validates_presence_of
-=======
 
   has_many :orders
 
->>>>>>> c7f8196cb59a96cf1cf9c229cc8bab42dd3d0175
   validates :name, presence: true
   validates :address, presence: true
   validates :city, presence: true

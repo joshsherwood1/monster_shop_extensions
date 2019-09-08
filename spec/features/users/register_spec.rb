@@ -86,11 +86,6 @@ describe 'User Registration' do
       fill_in :password_confirmation, with: password_confirmation
 
       click_button "Submit"
-<<<<<<< HEAD
-      #add more to test to make sure
-=======
-
->>>>>>> c7f8196cb59a96cf1cf9c229cc8bab42dd3d0175
       expect(current_path).to eq("/users")
       expect(page).to have_content("Email has already been taken")
       expect(user_1).to eq(User.last)
