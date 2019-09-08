@@ -80,7 +80,7 @@ RSpec.describe "User Profile" do
     it 'I must use a unique email address when updating my profile' do
       visit '/profile/edit'
 
-      email = 'christopher@email.com'
+      email = 'ck@email.com'
 
       fill_in "Email", with: email
       click_button 'Update Profile'
