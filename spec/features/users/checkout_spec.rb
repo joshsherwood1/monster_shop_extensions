@@ -51,4 +51,28 @@ describe "when regular user visits cart" do
     expect(page).to_not have_link("Checkout")
 
   end
+
+  #test for user story 24
+  it "when I have orders I see a link called 'My Orders' that takes me to my orders index" do
+    visit '/profile'
+    expect(page).to_not have_link("My Orders")
+
+    visit cart_path
+    click_link "Checkout"
+    fill_in :name, with: @regular_user.name
+    fill_in :address, with: @regular_user.address
+    fill_in :city, with: @regular_user.city
+    fill_in :state, with: @regular_user.state
+    fill_in :zip, with: @regular_user.zip
+    click_button "Create Order"
+
+    visit '/profile'
+
+    within ".my-orders-link" do
+      expect(page).to have_link("My Orders")
+      click_link "My Orders"
+    end
+
+    expect(current_path).to eq('/profile/orders')
+  end
 end

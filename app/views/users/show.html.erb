@@ -6,3 +6,8 @@
 <%= @user.email %>
 <%= link_to 'Edit Profile', '/profile/edit' %>
 <%= link_to 'Edit Password', '/profile/password_edit' %>
+<section class="my-orders-link">
+  <% unless @user.no_orders? %>
+    <%= link_to 'My Orders', '/profile/orders' %>
+  <% end %>
+</section>
