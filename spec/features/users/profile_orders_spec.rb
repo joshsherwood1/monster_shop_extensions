@@ -21,34 +21,59 @@ describe "when regular user visits cart" do
     click_on "Add To Cart"
     visit "/items/#{@pencil.id}"
     click_on "Add To Cart"
+    visit "/items/#{@pencil.id}"
+    click_on "Add To Cart"
     visit '/login'
     fill_in :email, with: @regular_user.email
     fill_in :password, with: @regular_user.password
     click_button "Log In"
   end
-  it "they can checkout and and order is created associated with user" do
+
+  #test for user story 24
+  it "when I have orders I see a link called 'My Orders' that takes me to my orders index" do
+    visit '/profile'
+    expect(page).to_not have_link("My Orders")
 
     visit cart_path
     click_link "Checkout"
-
     fill_in :name, with: @regular_user.name
     fill_in :address, with: @regular_user.address
     fill_in :city, with: @regular_user.city
     fill_in :state, with: @regular_user.state
     fill_in :zip, with: @regular_user.zip
-
     click_button "Create Order"
 
-    expect(current_path).to eq("/profile/orders")
+    visit '/profile'
+
+    within ".my-orders-link" do
+      expect(page).to have_link("My Orders")
+      click_link "My Orders"
+    end
+
+    expect(current_path).to eq('/profile/orders')
+  end
+
+  it "user sees all order info on profile orders page" do
+    visit cart_path
+    click_link "Checkout"
+    fill_in :name, with: @regular_user.name
+    fill_in :address, with: @regular_user.address
+    fill_in :city, with: @regular_user.city
+    fill_in :state, with: @regular_user.state
+    fill_in :zip, with: @regular_user.zip
+    click_button "Create Order"
+
     order = Order.last
-    #might need to add more tests to make sure order is in system
-    expect(order.status).to eq("pending")
-    expect(order.user_id).to eq(@regular_user.id)
-    expect(page).to have_content("Order Created!")
+    within ".order-info-#{order.id}" do
+      expect(page).to have_content("Date created: #{order.created_at.strftime("%d %b %y")}")
+      expect(page).to have_content("Last update: #{order.updated_at.strftime("%d %b %y")}")
+      expect(page).to have_content("Order status: #{order.status}")
+      expect(page).to have_content("Total items: #{order.total_quantity}")
+      expect(page).to have_content("Grand total: #{order.grandtotal}")
+      expect(page).to have_link("Order ID: #{order.id}")
+      click_link("Order ID: #{order.id}")
+    end
 
-    visit '/cart'
-    expect(page).to have_content("Cart is currently empty")
-    expect(page).to_not have_link("Checkout")
-
+    expect(current_path).to eq("/orders/#{order.id}")
   end
 end
