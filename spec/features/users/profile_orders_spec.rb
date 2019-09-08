@@ -74,19 +74,38 @@ describe "when regular user visits cart" do
       click_link("Order ID: #{order.id}")
     end
 
-    expect(current_path).to eq("/orders/#{order.id}")
+    expect(current_path).to eq("/profile/orders/#{order.id}")
   end
 
-#   As a registered user
-# When I visit my Profile Orders page
-# And I click on a link for order's show page
-# My URL route is now something like "/profile/orders/15"
-# I see all information about the order, including the following information:
-# - the ID of the order
-# - the date the order was made
-# - the date the order was last updated
-# - the current status of the order
-# - each item I ordered, including name, description, thumbnail, quantity, price and subtotal
-# - the total quantity of items in the whole order
-# - the grand total of all items for that order
+  it "when user visits order show page they see info about that order" do
+    visit cart_path
+    click_link "Checkout"
+    fill_in :name, with: @regular_user.name
+    fill_in :address, with: @regular_user.address
+    fill_in :city, with: @regular_user.city
+    fill_in :state, with: @regular_user.state
+    fill_in :zip, with: @regular_user.zip
+    click_button "Create Order"
+
+    order = Order.last
+    item = order.items.last
+    item_order = order.item_orders.last
+    click_link("Order ID: #{order.id}")
+    expect(current_path).to eq("/profile/orders/#{order.id}")
+    expect(page).to have_content("Date created: #{order.created_at.strftime("%d %b %y")}")
+    expect(page).to have_content("Last update: #{order.updated_at.strftime("%d %b %y")}")
+    expect(page).to have_content("Order status: #{order.status}")
+    expect(page).to have_content("Total items: #{order.total_quantity}")
+    expect(page).to have_content("Grand total: #{order.grandtotal}")
+    expect(page).to have_link("Order ID: #{order.id}")
+
+    within "#item-#{item.id}" do
+      expect(page).to have_content(item.name)
+      expect(page).to have_content(item.description)
+      expect(page).to have_css("img[src*='#{item.image}']")
+      expect(page).to have_content(item_order.quantity)
+      expect(page).to have_content(item.price)
+      expect(page).to have_content(item_order.subtotal)
+    end
+  end
 end

@@ -2,7 +2,7 @@
 
 <% @user.orders.each do |order| %>
   <section id="order-info-<%=order.id%>">
-    <h2> <%=link_to "Order ID: #{order.id}", "/orders/#{order.id}" %> </h2>
+    <h2> <%=link_to "Order ID: #{order.id}", "/profile/orders/#{order.id}" %> </h2>
     <p>Date created: <%= order.created_at.strftime("%d %b %y") %></p>
     <p>Last update: <%= order.updated_at.strftime("%d %b %y") %></p>
     <p>Order status: <%= order.status%></p>
