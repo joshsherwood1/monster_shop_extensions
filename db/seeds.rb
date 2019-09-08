@@ -5,9 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
 Review.destroy_all
 Item.destroy_all
 Merchant.destroy_all
+User.destroy_all
 
 merchant_employee = User.create(  name: "alec",
                     address: "234 Main",
@@ -28,3 +30,23 @@ tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never po
 #dog_shop items
 pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+
+merchant_employee_2 = User.create(  name: "alec",
+                    address: "234 Main",
+                    city: "Denver",
+                    state: "CO",
+                    zip: 80204,
+                    email: "alec1@gmail.com",
+                    password: "password",
+                    role: 1,
+                    merchant_id: bike_shop.id)
+
+merchant_admin = User.create(  name: "Sam",
+                    address: "234 Main",
+                    city: "Denver",
+                    state: "CO",
+                    zip: 80204,
+                    email: "alec2@gmail.com",
+                    password: "password",
+                    role: 2,
+                    merchant_id: bike_shop.id)
