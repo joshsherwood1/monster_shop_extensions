@@ -13,9 +13,8 @@ class UsersController < ApplicationController
       redirect_to "/profile"
     else
       flash[:error] = @user.errors.full_messages.uniq
-      #this might need to be changed after user can login
-      #consider using render
-      redirect_to '/register'
+      render :new
+      # redirect_to '/register'
     end
   end
 

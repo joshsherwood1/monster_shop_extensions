@@ -52,7 +52,7 @@ describe 'User Registration' do
       expect(page).to have_content("Password digest can't be blank")
       expect(page).to have_content("Address can't be blank")
 
-      expect(current_path).to eq("/register")
+      expect(current_path).to eq("/users")
     end
 
     it 'they have to use unique email address' do
@@ -87,7 +87,7 @@ describe 'User Registration' do
 
       click_button "Submit"
 
-      expect(current_path).to eq("/register")
+      expect(current_path).to eq("/users")
       expect(page).to have_content("Email has already been taken")
       expect(user_1).to eq(User.last)
       # expect(page).to have_content(name)

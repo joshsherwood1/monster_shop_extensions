@@ -11,14 +11,32 @@ Item.destroy_all
 Merchant.destroy_all
 User.destroy_all
 
-merchant_employee = User.create(  name: "alec",
-                    address: "234 Main",
-                    city: "Denver",
-                    state: "CO",
-                    zip: 80204,
-                    email: "alec@gmail.com",
-                    password: "password",
-                    role: 2)
+regular_user = User.create!(  name: "alec",
+  address: "234 Main",
+  city: "Denver",
+  state: "CO",
+  zip: 80204,
+  email: "5@gmail.com",
+  password: "password"
+)
+merchant_user = User.create!(  name: "josh",
+  address: "234 Main",
+  city: "Denver",
+  state: "CO",
+  zip: 80204,
+  email: "6@gmail.com",
+  password: "password",
+  role: 1
+)
+admin_user = User.create!(  name: "chris",
+  address: "234 Main",
+  city: "Denver",
+  state: "CO",
+  zip: 80204,
+  email: "7@gmail.com",
+  password: "password",
+  role: 3
+)
 
 #merchants
 bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
