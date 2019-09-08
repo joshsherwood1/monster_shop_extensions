@@ -64,7 +64,7 @@ describe "when regular user visits cart" do
     click_button "Create Order"
 
     order = Order.last
-    within ".order-info-#{order.id}" do
+    within "#order-info-#{order.id}" do
       expect(page).to have_content("Date created: #{order.created_at.strftime("%d %b %y")}")
       expect(page).to have_content("Last update: #{order.updated_at.strftime("%d %b %y")}")
       expect(page).to have_content("Order status: #{order.status}")
@@ -76,4 +76,17 @@ describe "when regular user visits cart" do
 
     expect(current_path).to eq("/orders/#{order.id}")
   end
+
+#   As a registered user
+# When I visit my Profile Orders page
+# And I click on a link for order's show page
+# My URL route is now something like "/profile/orders/15"
+# I see all information about the order, including the following information:
+# - the ID of the order
+# - the date the order was made
+# - the date the order was last updated
+# - the current status of the order
+# - each item I ordered, including name, description, thumbnail, quantity, price and subtotal
+# - the total quantity of items in the whole order
+# - the grand total of all items for that order
 end
