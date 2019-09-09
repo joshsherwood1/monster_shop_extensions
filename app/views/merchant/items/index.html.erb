@@ -13,8 +13,9 @@
       <% if current_merchant_admin? && item.active? %>
         <p>Active</p>
         <%= link_to "Deactivate", "/merchant/items/#{item.id}", method: :patch %>
-      <% else %>
+      <% elsif current_merchant_admin? && !item.active? %>
         <p>Inactive</p>
+        <%= link_to "Activate", "/merchant/items/#{item.id}", method: :patch %>
       <% end %>
     </section>
     <% end %>
