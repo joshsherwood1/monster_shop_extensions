@@ -25,4 +25,8 @@ class Merchant <ApplicationRecord
     item_orders.distinct.joins(:order).pluck(:city)
   end
 
+  def get_individual_orders
+    item_orders.group(:order_id).select("item_orders.order_id, sum(quantity) as total_quantity, sum(quantity * item_orders.price) as total_subtotal")
+  end
+
 end
