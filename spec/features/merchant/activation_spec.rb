@@ -49,8 +49,17 @@ describe "As a mechant admin" do
     expect(page).to have_content("#{@dog_bone.name} for sale")
   end
 
-# I see the item is now active
-
-
-
+  it 'I see a button to delete items that have never been ordered' do
+    visit '/merchant/items'
+    within "#merchant-item-#{@tire.id}" do
+      expect(page).to have_button('Delete')
+      click_button 'Delete'
+    end
+    expect(current_path).to eq("/merchant/items")
+    expect(page).to have_content("#{@tire.name} has been deleted")
+    expect(page).to_not have_content("#{@tire.description}")
+    expect(page).to_not have_content("#{@tire.price}")
+    expect(page).to_not have_css("img[src*='#{@tire.image}']")
+    expect(page).to_not have_content("#{@tire.inventory}")
+  end
 end
