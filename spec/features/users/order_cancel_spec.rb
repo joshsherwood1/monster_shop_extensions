@@ -43,12 +43,15 @@ describe "when regular user visits cart" do
     click_button "Create Order"
 
     order_1 = Order.last
+    # binding.pry
     item_1 = order_1.items.last
     item_order_1 = order_1.item_orders.last
     visit "/profile/orders/#{order_1.id}"
     click_link "Cancel Order"
+    # binding.pry
     expect(item_order_1.status).to eq("unfulfilled")
     #fails test but seems to work in development
+    #if I look at the Order.last it is cancelled
     expect(order_1.status).to eq("cancelled")
     expect(current_path).to eq("/profile")
     expect(page).to have_content("Order #{order_1.id} has been cancelled")

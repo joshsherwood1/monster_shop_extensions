@@ -26,6 +26,7 @@ class OrdersController <ApplicationController
       end
       order.item_orders.each do |item_order|
         item = Item.find(item_order.item_id)
+        # binding.pry
         #This method should probably be moved to model
         item.inventory -= item_order.quantity
         item.save
@@ -46,7 +47,8 @@ class OrdersController <ApplicationController
         item_order[:status] = "unfulfilled"
         item = Item.find(item_order.item_id)
         #This method should probably be moved to model
-        item.inventory += item_order.quantity
+        # item.inventory += item_order.quantity
+        item.add(item_order.quantity)
         item.save
       end
       # binding.pry

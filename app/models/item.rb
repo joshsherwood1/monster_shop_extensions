@@ -24,10 +24,9 @@ class Item <ApplicationRecord
   def no_orders?
     item_orders.empty?
   end
-  # 
-  # def add(num)
-  #   # binding.pry
-  #   inventory += num
-  # end
+  #
+  def add(num)
+    self.inventory += num
+  end
 
 end
