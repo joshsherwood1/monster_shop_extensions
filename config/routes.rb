@@ -53,6 +53,8 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
+  #we will probably want and items controller and a dashboard contrller
+  #within merhcant
   namespace :merchant do
     get '/', to: "dashboard#index"
   end

@@ -3,7 +3,9 @@ require 'rails_helper'
 describe "As a mechant admin" do
   before(:each) do
     @bike_shop = Merchant.create!(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 11234)
-    merchant_admin = User.create!(  name: "alec",
+    @tire = @bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+    @dog_bone = @bike_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+    @merchant_admin = @bike_shop.users.create!(  name: "alec",
                         address: "234 Main",
                         city: "Denver",
                         state: "CO",
@@ -13,18 +15,22 @@ describe "As a mechant admin" do
                         role: 2,
                         merchant_id: @bike_shop.id)
     visit '/login'
-
-    fill_in :email, with: merchant_employee.email
-    fill_in :password, with: merchant_employee.password
-
+    fill_in :email, with: @merchant_admin.email
+    fill_in :password, with: @merchant_admin.password
     click_button "Log In"
   end
-
-#   As a merchant admin
-# When I visit my items page
-# I see a link or button to deactivate the item next to each item that is active
-# And I click on the "deactivate" button or link for an item
-# I am returned to my items page
-# I see a flash message indicating this item is no longer for sale
-# I see the item is now inactive
+  it "I can deactivate items on item page" do
+    visit '/merchant/items'
+    within "#merchant-item-#{@dog_bone.id}" do
+      exptect(page).to_not have_link("deactivate")
+    end
+    within "#merchant-item-#{@tire.id}" do
+      #can get rid of line below once test passing
+      exptect(page).to have_link("deactivate")
+      click_link "deactivate"
+    end
+    expect(current_path).to eq("/merchant/items")
+    expect(page).to have_content("#{@tire.name} no longer for sale")
+    expect(@tire.active?).to eq(false)
+  end
 end

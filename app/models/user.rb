@@ -2,7 +2,8 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :orders
-
+  has_many :merchant_users
+  has_many :merchants, through: :merchant_users
   validates :name, presence: true
   validates :address, presence: true
   validates :city, presence: true
