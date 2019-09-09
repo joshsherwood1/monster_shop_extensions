@@ -34,4 +34,23 @@ describe "As a mechant admin" do
     expect(page).to have_content("#{@tire.name} no longer for sale")
     # expect(@tire.active?).to eq(false)
   end
+
+  it "I can Activate items on item page" do
+    visit '/merchant/items'
+    within "#merchant-item-#{@tire.id}" do
+      expect(page).to_not have_link("Activate")
+    end
+
+    within "#merchant-item-#{@dog_bone.id}" do
+      expect(page).to have_link("Activate")
+      click_link "Activate"
+    end
+    expect(current_path).to eq("/merchant/items")
+    expect(page).to have_content("#{@dog_bone.name} for sale")
+  end
+
+# I see the item is now active
+
+
+
 end
