@@ -18,7 +18,6 @@ describe "As a mechant employee or merchant admin" do
 
     within '.topnav' do
       expect(page).to have_link("Merchant Dashboard")
-      #click_link("Dashboard")
     end
 
     #not sure if this is the right path
@@ -26,8 +25,3 @@ describe "As a mechant employee or merchant admin" do
 
   end
 end
-
-# As a merchant employee or admin
-# I see the same links as a regular user
-# Plus the following links:
-# - a link to my merchant dashboard ("/merchant")
