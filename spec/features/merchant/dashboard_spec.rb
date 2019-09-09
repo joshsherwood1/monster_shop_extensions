@@ -59,7 +59,7 @@ describe "As a mechant employee" do
     expect(page).to have_content("#{@paper.name}")
     expect(page).to have_content("#{@paper.description}")
     expect(page).to have_content("#{@paper.price}")
-    expect(page).to have_content("#{@paper.image}")
+    expect(page).to have_css("img[src*='#{@paper.image}']")
     expect(page).to have_content("#{@paper.inventory}")
   end
 

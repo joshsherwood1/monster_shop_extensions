@@ -30,4 +30,13 @@ class Item <ApplicationRecord
     self.save
   end
 
+  def toggle
+    if self.active? == true
+      self.update(active?: false)
+    elsif self.active? == false
+      self.update(active?: true)
+    end
+    self
+  end
+
 end
