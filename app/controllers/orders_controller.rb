@@ -24,6 +24,12 @@ class OrdersController <ApplicationController
           price: item.price
           })
       end
+      order.item_orders.each do |item_order|
+        item = Item.find(item_order.item_id)
+        #This method should probably be moved to model
+        item.inventory -= item_order.quantity
+        item.save
+      end
       session.delete(:cart)
       flash[:success] = "Order Created!"
       redirect_to "/profile/orders"
@@ -33,6 +39,22 @@ class OrdersController <ApplicationController
     end
   end
 
+
+  def cancel
+    order = Order.find(params[:order_id])
+      order.item_orders.each do |item_order|
+        item_order[:status] = "unfulfilled"
+        item = Item.find(item_order.item_id)
+        #This method should probably be moved to model
+        item.inventory += item_order.quantity
+        item.save
+      end
+      # binding.pry
+    order[:status] = 3
+    order.save
+    redirect_to "/profile"
+    flash[:success] = ("Order #{order.id} has been cancelled")
+  end
 
   private
 
