@@ -4,3 +4,16 @@
 <p>City: <%= @merchant.city %></p>
 <p>State: <%= @merchant.state %></p>
 <p>Zip: <%= @merchant.zip %></p>
+
+<h5>Pending Orders: </h5>
+<% @quantity_for_each_order_id.each do |order_id, quantity| %>
+  <% @subtotal_for_each_order_id.each do |order_id, subtotal| %>
+  <section id="merchant-dashboard-order-<%=order_id%>">
+    <%= link_to("#{order_id}", "/orders/#{order_id}") %>
+    <%= Order.find(order_id).created_at.strftime("%d %b %y") %>
+    <p>Total Quantity of <%= @merchant.name%> items in this order: <%= quantity %> </p>
+    <p>Grand Total of <%= @merchant.name%> items in this order: <%= number_to_currency(subtotal) %> </p>
+  <% end %>
+  <% end %>
+  </section>
+    </section>
