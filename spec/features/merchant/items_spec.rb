@@ -23,12 +23,40 @@ describe "As a mechant admin" do
       expect(page).to have_button('Delete')
       click_button 'Delete'
     end
-    
-    expect(current_path).to eq("/merchant/items")
+
+    expect(current_path).to eq('/merchant/items')
     expect(page).to have_content("#{@tire.name} has been deleted")
     expect(page).to_not have_content("#{@tire.description}")
     expect(page).to_not have_content("#{@tire.price}")
     expect(page).to_not have_css("img[src*='#{@tire.image}']")
     expect(page).to_not have_content("#{@tire.inventory}")
+  end
+
+  it 'I have a link to add new items. These new items will be enabled and available for sale.' do
+    visit '/merchant/items'
+    click_link 'Add a New Item'
+    expect(current_path).to eq('/merchant/items/new')
+
+    name = 'Paint'
+    description = 'Change the color'
+    image_url = 'https://www.google.com/url?sa=i&source=imgres&cd=&ved=2ahUKEwjQ4YqU_sTkAhXDrZ4KHW6EBv8QjRx6BAgBEAQ&url=https%3A%2F%2Fwww.paint.org%2F&psig=AOvVaw2VOzStgtf0UEdDbD7r1utX&ust=1568161284764759'
+    price = 25
+    inventory = 5
+
+    fill_in :name, with: name
+    fill_in :description, with: description
+    fill_in :image, with: image_url
+    fill_in :price, with: price
+    fill_in :inventory, with: inventory
+    click_button 'Create Item'
+
+    @paint = Item.last
+
+    expect(current_path).to eq('/merchant/items')
+    expect(page).to have_content("#{@paint.name} has been created")
+    expect(page).to have_content(@paint.description.to_s)
+    expect(page).to have_content(@paint.price.to_s)
+    expect(page).to have_css("img[src*='#{@paint.image}']")
+    expect(page).to have_content(@paint.inventory.to_s)
   end
 end
