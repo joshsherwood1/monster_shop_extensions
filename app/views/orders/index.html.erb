@@ -1,0 +1,12 @@
+<h1><%= "#{@user.name.capitalize}'s " %>Orders</h1>
+
+<% @user.orders.each do |order| %>
+  <section id="order-info-<%=order.id%>">
+    <h2> <%=link_to "Order ID: #{order.id}", "/profile/orders/#{order.id}" %> </h2>
+    <p>Date created: <%= order.created_at.strftime("%d %b %y") %></p>
+    <p>Last update: <%= order.updated_at.strftime("%d %b %y") %></p>
+    <p>Order status: <%= order.status%></p>
+    <p>Total items: <%= order.total_quantity%></p>
+    <p>Grand total: <%= order.grandtotal %></p>
+  </section>
+<% end %>

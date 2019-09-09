@@ -5,7 +5,8 @@ class OrdersController <ApplicationController
   end
 
   def show
-    @order = Order.find(params[:id])
+    @order = Order.find(params[:order_id])
+    @user = current_user
   end
 
   def index

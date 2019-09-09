@@ -58,6 +58,11 @@ img{
 section[id*='review'] {
   background-color: #DCDCDC;
 }
+
+#order-show-pic img {
+  width: 5em;
+}
+
 .list-reviews {
   display: grid;
   width: 50%;

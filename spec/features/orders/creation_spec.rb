@@ -53,7 +53,6 @@ describe("Order Creation") do
       click_button "Create Order"
 
       new_order = Order.last
-
       expect(current_path).to eq("/profile/orders")
 
       visit "/orders/#{new_order.id}"

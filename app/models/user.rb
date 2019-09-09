@@ -15,4 +15,9 @@ class User < ApplicationRecord
   validates_numericality_of :zip
 
   enum role: %w(regular_user merchant_employee merchant_admin admin )
+
+  def no_orders?
+    orders.empty?
+  end
+
 end
