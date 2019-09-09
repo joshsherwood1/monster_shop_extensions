@@ -3,8 +3,8 @@ require 'rails_helper'
 describe "As a mechant admin" do
   before(:each) do
     @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 11234)
-    @tire = @bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
     @paper = @bike_shop.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
+    @tire = @bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
     @user = User.create(name: "alec", address: "234 Main", city: "Denver", state: "CO", zip: 80204, email: "a@gmail.com", password: "password", role: 2, merchant_id: @bike_shop.id)
     @order = @user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
     ItemOrder.create(order_id: @order.id, item_id: @paper.id, quantity: 2, price: 20)
@@ -76,8 +76,32 @@ describe "As a mechant admin" do
     fill_in 'Inventory', with: inventory
     click_button 'Create Item'
 
-    # expect(current_path).to eq('/merchant/items.')
     expect(find_field('Price').value).to eq(price.to_s)
     expect(find_field('Inventory').value).to eq(inventory.to_s)
+  end
+
+  it 'I can edit an item. All the rules for creating an item apply.' do
+    visit '/merchant/items'
+
+    within "#merchant-item-#{@tire.id}" do
+      click_button 'Edit'
+    end
+
+    expect(current_path).to eq("/merchant/items/#{@tire.id}/edit")
+
+    expect(find_field('Name').value).to eq 'Gatorskins'
+    expect(find_field('Description').value).to eq "They'll never pop!"
+    expect(find_field('Image').value).to eq('https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588')
+    expect(find_field('Price').value).to eq '100'
+    expect(find_field('Inventory').value).to eq '12'
+
+    name = 'New Tires'
+    fill_in 'Name', with: name
+    click_button 'Update Item'
+
+    expect(current_path).to eq('/merchant/items')
+    expect(page).to have_content("#{@tire.name} has been updated")
+    expect(page).to_not have_content('Gatorskins')
+    expect(page).to have_content('New Tires')
   end
 end
