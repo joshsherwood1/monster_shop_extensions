@@ -51,9 +51,7 @@ class OrdersController <ApplicationController
         item.add(item_order.quantity)
         item.save
       end
-      # binding.pry
-    order[:status] = 3
-    order.save
+    order.update(status: 3)
     redirect_to "/profile"
     flash[:success] = ("Order #{order.id} has been cancelled")
   end

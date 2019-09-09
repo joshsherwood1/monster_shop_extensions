@@ -27,6 +27,7 @@ class Item <ApplicationRecord
   #
   def add(num)
     self.inventory += num
+    self.save
   end
 
 end

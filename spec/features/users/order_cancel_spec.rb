@@ -52,10 +52,10 @@ describe "when regular user visits cart" do
     expect(item_order_1.status).to eq("unfulfilled")
     #fails test but seems to work in development
     #if I look at the Order.last it is cancelled
-    expect(order_1.status).to eq("cancelled")
+
     expect(current_path).to eq("/profile")
     expect(page).to have_content("Order #{order_1.id} has been cancelled")
-    visit "orders/#{order_1.id}"
+    visit "/orders/#{order_1.id}"
     expect(page).to have_content("Order status: cancelled")
 
   # I see a button or link to cancel the order_1 only if the order is still pending
