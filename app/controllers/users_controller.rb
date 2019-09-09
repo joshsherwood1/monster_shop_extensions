@@ -19,7 +19,6 @@ class UsersController < ApplicationController
   end
 
 
-
   def show
     @user = current_user
   end
@@ -55,7 +54,7 @@ class UsersController < ApplicationController
   end
 
   #Need to make sure that user_params doesn't store password
-  
+
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password)
   end
