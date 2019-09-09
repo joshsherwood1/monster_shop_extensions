@@ -1,0 +1,7 @@
+<% @users.each do |user| %>
+  <section id="user-index-<%=user.id%>">
+    <p><%= link_to "#{user.name}", "/admin/users/#{user.id}", method: :get %></p>
+    <p>Date registered: <%= user.created_at %></p>
+    <p>User type: <%= user.role %></p>
+  </section>
+<% end %>
