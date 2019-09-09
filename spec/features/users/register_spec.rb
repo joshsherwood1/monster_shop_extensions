@@ -90,8 +90,14 @@ describe 'User Registration' do
       expect(page).to have_content("Email has already been taken")
       expect(user_1).to eq(User.last)
       #workign in development but not testing
-      expect(page).to have_content(name)
-      expect(page).to have_content(address)
+      expect(find_field(:name).value).to eq(name)
+      expect(find_field(:address).value).to eq(address)
+      expect(find_field(:city).value).to eq(city)
+      expect(find_field(:state).value).to eq(state)
+      expect(find_field(:zip).value).to eq(zip.to_s)
+      expect(find_field(:email).value).to eq(nil)
+      expect(find_field(:password).value).to eq(nil)
+      expect(find_field(:password_confirmation).value).to eq(nil)
     end
   end
 end

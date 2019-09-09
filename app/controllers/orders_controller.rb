@@ -46,10 +46,7 @@ class OrdersController <ApplicationController
       order.item_orders.each do |item_order|
         item_order[:status] = "unfulfilled"
         item = Item.find(item_order.item_id)
-        #This method should probably be moved to model
-        # item.inventory += item_order.quantity
         item.add(item_order.quantity)
-        item.save
       end
     order.update(status: 3)
     redirect_to "/profile"
