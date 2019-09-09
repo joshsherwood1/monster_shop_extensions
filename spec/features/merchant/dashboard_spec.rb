@@ -55,16 +55,14 @@ describe "As a mechant employee" do
   it "the merchant dashboard shows all pending orders that have items that my merchant sells" do
     visit '/merchant'
 
-    save_and_open_page
-
     expect(page).to have_content("Pending Orders:")
     expect(page).to have_link("#{@order_1.id}")
-    expect(page).to have_content("#{@order_1.created_at}")
+    expect(page).to have_content("#{@order_1.created_at.strftime("%d %b %y")}")
     expect(page).to have_content("Total Quantity of #{@bike_shop.name} items in this order: 5")
     expect(page).to have_content("Grand Total of #{@bike_shop.name} items in this order: $46.00")
 
     expect(page).to have_link("#{@order_2.id}")
-    expect(page).to have_content("#{@order_2.created_at}")
+    expect(page).to have_content("#{@order_2.created_at.strftime("%d %b %y")}")
     expect(page).to have_content("Total Quantity of #{@bike_shop.name} items in this order: 4")
     expect(page).to have_content("Grand Total of #{@bike_shop.name} items in this order: $8.00")
   end
