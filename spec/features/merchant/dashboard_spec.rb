@@ -17,7 +17,7 @@ describe "As a mechant employee" do
                         role: 1,
                         merchant_id: @bike_shop.id)
 
-    regular_user =  User.create!(  name: "alec",
+    @regular_user =  User.create!(  name: "alec",
                     address: "234 Main",
                     city: "Denver",
                     state: "CO",
@@ -25,9 +25,9 @@ describe "As a mechant employee" do
                     email: "5@gmail.com",
                     password: "password"
                   )
-    @order_1 = regular_user.orders.create(name: "Sam Jackson", address: "223 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
-    @order_2 = regular_user.orders.create(name: "Sam Jackson", address: "223 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
-    ItemOrder.create(order_id: @order_1.id, item_id: @tire.id, quantity: 2, price: 100)
+    @order_1 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
+    @order_2 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
+    @itemorder = ItemOrder.create(order_id: @order_1.id, item_id: @tire.id, quantity: 2, price: 100)
     ItemOrder.create(order_id: @order_1.id, item_id: @paper.id, quantity: 2, price: 20)
     ItemOrder.create(order_id: @order_1.id, item_id: @pencil.id, quantity: 3, price: 2)
     ItemOrder.create(order_id: @order_2.id, item_id: @tire.id, quantity: 1, price: 100)
@@ -50,6 +50,29 @@ describe "As a mechant employee" do
     expect(page).to have_content("#{@bike_shop.city}")
     expect(page).to have_content("#{@bike_shop.state}")
     expect(page).to have_content("#{@bike_shop.zip}")
+  end
+
+  it 'When I visit my dashboard I see a link to view all the items owned by the merchant' do
+    visit '/merchant'
+    click_link 'View My Current Items'
+    expect(current_path).to eq('/merchant/items')
+    expect(page).to have_content("#{@paper.name}")
+    expect(page).to have_content("#{@paper.description}")
+    expect(page).to have_content("#{@paper.price}")
+    expect(page).to have_css("img[src*='#{@paper.image}']")
+    expect(page).to have_content("#{@paper.inventory}")
+  end
+
+  it 'When I visit an order show page I see the customer info and order info specifically for my merchant' do
+    visit '/merchant'
+    click_link "#{@order_1.id}"
+    expect(current_path).to eq("/orders/#{@order_1.id}")
+    expect(page).to have_content("#{@regular_user.name}")
+    expect(page).to have_content("#{@regular_user.address}")
+    expect(page).to have_content("#{@tire.name}")
+    expect(page).to have_css("img[src*='#{@tire.image}']")
+    expect(page).to have_content("#{@tire.price}")
+    expect(page).to have_content("#{@itemorder.quantity}")
   end
 
   it "the merchant dashboard shows all pending orders that have items that my merchant sells" do
