@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :orders
+  belongs_to :merchant, optional: true
 
   validates :name, presence: true
   validates :address, presence: true
@@ -15,5 +16,14 @@ class User < ApplicationRecord
   validates_length_of :zip, :is => 5
   validates_numericality_of :zip
 
+<<<<<<< HEAD
   enum role: %w(regular_user merchant_employee merchant_admin admin)
+=======
+  enum role: %w(regular_user merchant_employee merchant_admin admin )
+
+  def no_orders?
+    orders.empty?
+  end
+
+>>>>>>> 807f91be2eb27273119a31b556c72d81d7dcc722
 end

@@ -89,17 +89,9 @@ describe 'User Registration' do
       expect(current_path).to eq("/users")
       expect(page).to have_content("Email has already been taken")
       expect(user_1).to eq(User.last)
-      # expect(page).to have_content(name)
-
-      #need to test to see all fields are pre-filled
+      #workign in development but not testing
+      expect(page).to have_content(name)
+      expect(page).to have_content(address)
     end
   end
 end
-# As a visitor
-# When I visit the user registration page
-# If I fill out the registration form
-# But include an email address already in the system
-# Then I am returned to the registration page
-# My details are not saved and I am not logged in
-# The form is filled in with all previous data except the email field and password fields
-# I see a flash message telling me the email address is already in use

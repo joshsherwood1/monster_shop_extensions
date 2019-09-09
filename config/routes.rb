@@ -34,7 +34,10 @@ Rails.application.routes.draw do
 
   get "/orders/new", to: "orders#new"
   post "/orders", to: "orders#create"
-  get "/orders/:id", to: "orders#show"
+  get "/orders/:order_id", to: "orders#show"
+  #might want to change cancel to update
+  patch "/orders/:order_id", to: "orders#cancel"
+  get "/profile/orders/:order_id", to: "orders#show"
 
   get "/register", to: "users#new"
   post "/users", to: "users#create"
@@ -50,6 +53,8 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
+  #we will probably want and items controller and a dashboard contrller
+  #within merhcant
   namespace :merchant do
     get '/', to: "dashboard#index"
   end
