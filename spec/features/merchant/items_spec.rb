@@ -84,7 +84,7 @@ describe "As a mechant admin" do
     visit '/merchant/items'
 
     within "#merchant-item-#{@tire.id}" do
-      click_button 'Edit'
+      click_link 'Edit'
     end
 
     expect(current_path).to eq("/merchant/items/#{@tire.id}/edit")
@@ -95,13 +95,13 @@ describe "As a mechant admin" do
     expect(find_field('Price').value).to eq '100'
     expect(find_field('Inventory').value).to eq '12'
 
-    name = 'New Tires'
-    fill_in 'Name', with: name
+    description = 'They pop sometimes'
+    fill_in 'Description', with: description
     click_button 'Update Item'
 
     expect(current_path).to eq('/merchant/items')
     expect(page).to have_content("#{@tire.name} has been updated")
-    expect(page).to_not have_content('Gatorskins')
-    expect(page).to have_content('New Tires')
+    expect(page).to_not have_content("They'll never pop!")
+    expect(page).to have_content('They pop sometimes')
   end
 end
