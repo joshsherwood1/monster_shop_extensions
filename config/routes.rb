@@ -60,6 +60,7 @@ Rails.application.routes.draw do
     get '/items', to: "items#index"
     patch '/items/:item_id', to: "items#toggle"
     delete '/items/:item_id', to: "items#destroy"
+    patch '/itemorders/:id/fulfill', to: "itemorders#fulfill"
   end
 
   namespace :admin do
