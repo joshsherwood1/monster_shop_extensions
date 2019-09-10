@@ -43,5 +43,20 @@ describe Order, type: :model do
     it 'total_quantity' do
       expect(@order_1.total_quantity).to eq(5)
     end
+
+    it 'packaged' do
+      @regular_user =  User.create!(  name: "alec",
+                      address: "234 Main",
+                      city: "Denver",
+                      state: "CO",
+                      zip: 80204,
+                      email: "890@gmail.com",
+                      password: "password"
+                    )
+      @order_1 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
+      expect(@order_1.status).to eq("pending")
+      @order_1.packaged
+      expect(@order_1.status).to eq("packaged")
+    end
   end
 end
