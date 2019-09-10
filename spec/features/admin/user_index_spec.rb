@@ -47,4 +47,16 @@ describe "As an Admin User" do
     expect(current_path).to eq("/admin/users/#{@user_3.id}")
 # Only admin users can reach this path.
   end
+
+  it "I can see user profile page" do
+    visit("/admin/users/#{@user_3.id}")
+    expect(page).to have_content(@user_3.name)
+    expect(page).to have_content(@user_3.address)
+    expect(page).to have_content(@user_3.city)
+    expect(page).to have_content(@user_3.state)
+    expect(page).to have_content(@user_3.zip)
+    expect(page).to have_content(@user_3.email)
+    expect(page).to_not have_content(@user_3.password)
+    expect(page).to_not have_link('Edit Profile')
+  end
 end

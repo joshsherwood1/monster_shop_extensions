@@ -20,7 +20,14 @@ class UsersController < ApplicationController
 
 
   def show
-    @user = current_user
+    # @user = current_user
+    if current_user && current_admin?
+      # binding.pry
+      @user = User.find(params[:user_id])
+    elsif current_user
+      @user = current_user
+    end
+    @user
   end
 
   def edit
