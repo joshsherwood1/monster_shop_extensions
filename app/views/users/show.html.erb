@@ -4,8 +4,10 @@
 <%= @user.state %>
 <%= @user.zip %>
 <%= @user.email %>
-<%= link_to 'Edit Profile', '/profile/edit' %>
-<%= link_to 'Edit Password', '/profile/password_edit' %>
+<% if !current_admin? %>
+  <%= link_to 'Edit Profile', '/profile/edit' %>
+  <%= link_to 'Edit Password', '/profile/password_edit' %>
+<% end %>
 <section class="my-orders-link">
   <% unless @user.no_orders? %>
     <%= link_to 'My Orders', '/profile/orders' %>

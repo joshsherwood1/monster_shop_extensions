@@ -16,4 +16,8 @@ class Order <ApplicationRecord
     item_orders.sum(:quantity)
   end
 
+  def self.sort_orders
+    order(status: :asc)
+  end
+
 end
