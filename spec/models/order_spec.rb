@@ -35,10 +35,7 @@ describe Order, type: :model do
       order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2)
       order_1.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 3)
       expect(order_1.grandtotal).to eq(230)
-    end
-
-    it 'grandtotal' do
-      expect(@order_1.grandtotal).to eq(230)
+      expect(order_1.total_quantity).to eq(5)
     end
 
     it "can sort orders" do
@@ -56,10 +53,6 @@ describe Order, type: :model do
 
       expect(Order.all).to eq([order_2, order_5, order_3, order_1, order_4 ])
       expect(Order.sort_orders).to eq([order_2, order_4, order_3, order_1, order_5 ])
-    end
-
-    it 'total_quantity' do
-      expect(@order_1.total_quantity).to eq(5)
     end
 
     it 'packaged' do
