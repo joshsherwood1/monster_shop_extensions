@@ -13,7 +13,6 @@ class Merchant::ItemsController < Merchant::BaseController
   end
 
   def toggle
-    #add merchant_admin? check
     item = Item.find(params[:item_id])
     item.toggle
     if item.active? == false

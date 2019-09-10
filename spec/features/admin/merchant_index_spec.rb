@@ -26,7 +26,7 @@ describe "Admin user can see all merchants" do
     click_button "Log In"
   end
 
-  it "When visit index page see merchant info and can disable" do
+  it "When visit index page see merchant info and can disable and enable" do
     visit "/merchants"
 
     within "#merchant-#{@bike_shop.id}" do
@@ -36,8 +36,23 @@ describe "Admin user can see all merchants" do
 
     within "#merchant-#{@dog_shop.id}" do
       expect(page).to have_link("Disable")
+      click_link("Disable")
     end
 
+    expect(current_path).to eq("/merchants")
+    expect(page).to have_content("#{@dog_shop.name} disabled")
+
+    within "#merchant-#{@dog_shop.id}" do
+      expect(page).to have_link("Enable")
+      click_link("Enable")
+    end
+
+    expect(current_path).to eq("/merchants")
+    expect(page).to have_content("#{@dog_shop.name} enabled")
+  end
+
+  it "Admin can see merchant dashboard" do
+    visit "/merchants"
     within "#merchant-#{@bike_shop.id}" do
       click_link(@bike_shop.name)
     end
@@ -55,8 +70,5 @@ describe "Admin user can see all merchants" do
     expect(page).to have_content("#{@bike_shop.city}")
     expect(page).to have_content("#{@bike_shop.state}")
     expect(page).to have_content("#{@bike_shop.zip}")
-
-# I am returned to the admin's merchant index page where I see that the merchant's account is now disabled
-# And I see a flash message that the merchant's account is now disabled
   end
 end

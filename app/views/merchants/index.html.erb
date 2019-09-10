@@ -7,9 +7,9 @@
         <h2><%=link_to merchant.name, "/admin/merchants/#{merchant.id}"%></h2>
         <p>Location: <%= merchant.city %>, <%= merchant.state %></p>
           <% if merchant.enabled? %>
-            <%= link_to 'Disable', "merchant/#{merchant.id}", method: :patch %>
+            <%= link_to 'Disable', "/admin/merchants/#{merchant.id}", method: :patch %>
           <% else %>
-            <%= link_to 'Enable', "merchant/#{merchant.id}", method: :patch %>
+            <%= link_to 'Enable', "/admin/merchants/#{merchant.id}", method: :patch %>
           <% end %>
       <% else %>
         </section>

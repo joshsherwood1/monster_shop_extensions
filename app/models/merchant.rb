@@ -31,4 +31,8 @@ class Merchant <ApplicationRecord
     item_orders.group(:order_id).select("item_orders.order_id, sum(quantity) as total_quantity, sum(quantity * item_orders.price) as total_subtotal")
   end
 
+  def toggle
+    self.update(enabled?: !enabled?)
+  end
+
 end
