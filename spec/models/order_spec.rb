@@ -35,6 +35,7 @@ describe Order, type: :model do
       order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2)
       order_1.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 3)
       expect(order_1.grandtotal).to eq(230)
+      expect(order_1.total_quantity).to eq(5)
     end
 
     it "can sort orders" do
@@ -52,7 +53,21 @@ describe Order, type: :model do
 
       expect(Order.all).to eq([order_2, order_5, order_3, order_1, order_4 ])
       expect(Order.sort_orders).to eq([order_2, order_4, order_3, order_1, order_5 ])
+    end
 
+    it 'packaged' do
+      @regular_user =  User.create!(  name: "alec",
+                      address: "234 Main",
+                      city: "Denver",
+                      state: "CO",
+                      zip: 80204,
+                      email: "890@gmail.com",
+                      password: "password"
+                    )
+      @order_1 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
+      expect(@order_1.status).to eq("pending")
+      @order_1.packaged
+      expect(@order_1.status).to eq("packaged")
     end
   end
 end

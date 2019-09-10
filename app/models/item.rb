@@ -9,9 +9,9 @@ class Item <ApplicationRecord
                         :price,
                         :image,
                         :inventory
-  validates_inclusion_of :active?, :in => [true, false]
+  validates_inclusion_of :active?, in: [true, false]
   validates_numericality_of :price, greater_than: 0
-
+  validates_numericality_of :inventory, greater_than_or_equal_to: 0
 
   def average_review
     reviews.average(:rating)
@@ -24,10 +24,15 @@ class Item <ApplicationRecord
   def no_orders?
     item_orders.empty?
   end
-  #
+
   def add(num)
     self.inventory += num
     save
+  end
+
+  def subtract(num)
+    self.inventory -= num
+    self.save
   end
 
   def toggle
@@ -39,5 +44,4 @@ class Item <ApplicationRecord
     # end
     # self
   end
-
 end
