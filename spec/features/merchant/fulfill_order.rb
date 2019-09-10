@@ -66,7 +66,6 @@ describe "As a mechant employee or admin" do
       expect(page).to_not have_link("Fulfill #{@paper.name}")
       expect(page).to have_content("#{@paper.name} is fulfilled")
     end
-    save_and_open_page
     visit "/items/#{@paper.id}"
     expect(page).to have_content("Inventory: 1")
   end
