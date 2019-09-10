@@ -3,6 +3,14 @@ class Merchant::ItemsController < Merchant::BaseController
     @merchant = Merchant.find(current_user.merchant_id)
   end
 
+  def destroy
+    item = Item.find(params[:item_id])
+    Review.where(item_id: item.id).destroy_all
+    item.destroy
+    redirect_to "/merchant/items"
+    flash[:success] = "#{item.name} has been deleted"
+  end
+
   def toggle
     #add merchant_admin? check
     item = Item.find(params[:item_id])

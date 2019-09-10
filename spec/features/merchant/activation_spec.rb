@@ -48,9 +48,4 @@ describe "As a mechant admin" do
     expect(current_path).to eq("/merchant/items")
     expect(page).to have_content("#{@dog_bone.name} for sale")
   end
-
-# I see the item is now active
-
-
-
 end
