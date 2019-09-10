@@ -66,5 +66,6 @@ Rails.application.routes.draw do
     get '/', to: "dashboard#index"
     get '/users', to: "users#index"
   end
+  #does this need to be more protected so other users can edit?
   get '/admin/users/:user_id', to: "users#show"
 end
