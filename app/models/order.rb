@@ -16,4 +16,8 @@ class Order <ApplicationRecord
     item_orders.sum(:quantity)
   end
 
+  def packaged
+    self.status = 1
+    self.save
+  end
 end
