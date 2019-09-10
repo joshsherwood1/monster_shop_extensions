@@ -53,8 +53,6 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
-  #we will probably want and items controller and a dashboard contrller
-  #within merhcant
   namespace :merchant do
     get '/', to: "dashboard#index"
     get '/items', to: "items#index"
@@ -68,6 +66,8 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/', to: "dashboard#index"
     get '/users', to: "users#index"
+    patch '/merchants/:merchant_id', to: "merchants#toggle"
+    get '/merchants/:merchant_id', to: "merchants#show"
   end
   #does this need to be more protected so other users can edit?
   get '/admin/users/:user_id', to: "users#show"

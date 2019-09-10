@@ -27,7 +27,7 @@ class Item <ApplicationRecord
 
   def add(num)
     self.inventory += num
-    self.save
+    save
   end
 
   def subtract(num)
@@ -36,11 +36,12 @@ class Item <ApplicationRecord
   end
 
   def toggle
-    if self.active? == true
-      self.update(active?: false)
-    elsif self.active? == false
-      self.update(active?: true)
-    end
-    self
+    self.update(active?: !active?)
+    # if self.active? == true
+    #   self.update(active?: false)
+    # elsif self.active? == false
+    #   self.update(active?: true)
+    # end
+    # self
   end
 end
