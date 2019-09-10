@@ -25,7 +25,7 @@ describe User, type: :model do
                         city: "Denver",
                         state: "CO",
                         zip: 80222,
-                        email: "123@gamil.com",
+                        email: "623@gamil.com",
                         password: "password",
                         role: 0)
 
@@ -39,12 +39,26 @@ describe User, type: :model do
                         city: "Denver",
                         state: "CO",
                         zip: 80222,
-                        email: "123@gamil.com",
+                        email: "823@gamil.com",
                         password: "password",
                         role: 1)
 
       expect(user.role).to eq("merchant_employee")
       expect(user.merchant_employee?).to be_truthy
+    end
+  end
+
+  describe "instance methods" do
+    it "can verify that a user has no orders" do
+    user = User.create!(name: "alec",
+                      address: "123 Main",
+                      city: "Denver",
+                      state: "CO",
+                      zip: 80222,
+                      email: "456@gamil.com",
+                      password: "password",
+                      role: 0)
+    expect(user.no_orders?).to eq(true)
     end
   end
 end
