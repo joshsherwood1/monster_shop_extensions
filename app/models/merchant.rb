@@ -8,6 +8,8 @@ class Merchant <ApplicationRecord
                         :state,
                         :zip
 
+  validates_inclusion_of :enabled?, :in => [true, false]
+
 
   def no_orders?
     item_orders.empty?
