@@ -55,5 +55,25 @@ describe Item, type: :model do
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
+
+    it "adds order quantity to item inventory" do
+      @itemorder = ItemOrder.create(item_id: @chain.id, quantity: 2, price: 100)
+      @chain.add(@itemorder.quantity)
+      expect(@chain.inventory).to eq(7)
+    end
+
+    it "subtract order quantity from item inventory" do
+      @itemorder = ItemOrder.create(item_id: @chain.id, quantity: 2, price: 100)
+      @chain.subtract(@itemorder.quantity)
+      expect(@chain.inventory).to eq(3)
+    end
+
+    it "toggles" do
+      expect(@chain.active?).to eq(true)
+      @chain.toggle
+      expect(@chain.active?).to eq(false)
+      @chain.toggle
+      expect(@chain.active?).to eq(true)
+    end
   end
 end

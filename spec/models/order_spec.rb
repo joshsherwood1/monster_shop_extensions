@@ -37,6 +37,10 @@ describe Order, type: :model do
       expect(order_1.grandtotal).to eq(230)
     end
 
+    it 'grandtotal' do
+      expect(@order_1.grandtotal).to eq(230)
+    end
+
     it "can sort orders" do
       dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
       pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
@@ -52,7 +56,25 @@ describe Order, type: :model do
 
       expect(Order.all).to eq([order_2, order_5, order_3, order_1, order_4 ])
       expect(Order.sort_orders).to eq([order_2, order_4, order_3, order_1, order_5 ])
+    end
 
+    it 'total_quantity' do
+      expect(@order_1.total_quantity).to eq(5)
+    end
+
+    it 'packaged' do
+      @regular_user =  User.create!(  name: "alec",
+                      address: "234 Main",
+                      city: "Denver",
+                      state: "CO",
+                      zip: 80204,
+                      email: "890@gmail.com",
+                      password: "password"
+                    )
+      @order_1 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
+      expect(@order_1.status).to eq("pending")
+      @order_1.packaged
+      expect(@order_1.status).to eq("packaged")
     end
   end
 end

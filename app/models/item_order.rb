@@ -9,4 +9,9 @@ class ItemOrder <ApplicationRecord
   def subtotal
     price * quantity
   end
+
+  def fulfill_and_save_item_order
+    self.status = "fulfilled"
+    self.save
+  end
 end
