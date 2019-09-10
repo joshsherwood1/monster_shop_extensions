@@ -6,6 +6,7 @@ class Merchant::ItemsController < Merchant::BaseController
 
   def new
     @merchant = Merchant.find(current_user.merchant_id)
+    @item = Item.new
   end
 
   def destroy
@@ -30,12 +31,12 @@ class Merchant::ItemsController < Merchant::BaseController
 
   def create
     @merchant = Merchant.find(current_user.merchant_id)
-    item = @merchant.items.create(item_params)
-    if item.save
+    @item = @merchant.items.create(item_params)
+    if @item.save
       redirect_to "/merchant/items"
-      flash[:success] = "#{item.name} has been created"
+      flash[:success] = "#{@item.name} has been created"
     else
-      flash[:error] = item.errors.full_messages.to_sentence
+      flash[:error] = @item.errors.full_messages.to_sentence
       render :new
     end
   end
@@ -43,6 +44,6 @@ class Merchant::ItemsController < Merchant::BaseController
   private
 
   def item_params
-    params.permit(:name,:description,:price,:inventory,:image)
+    params.require(:item).permit(:name,:description,:price,:inventory,:image)
   end
 end

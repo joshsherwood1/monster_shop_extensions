@@ -43,20 +43,41 @@ describe "As a mechant admin" do
     price = 25
     inventory = 5
 
-    fill_in :name, with: name
-    fill_in :description, with: description
-    fill_in :image, with: image_url
-    fill_in :price, with: price
-    fill_in :inventory, with: inventory
+    fill_in 'Name', with: name
+    fill_in 'Description', with: description
+    fill_in 'Image', with: image_url
+    fill_in 'Price', with: price
+    fill_in 'Inventory', with: inventory
     click_button 'Create Item'
 
-    @paint = Item.last
+    paint = Item.last
 
     expect(current_path).to eq('/merchant/items')
-    expect(page).to have_content("#{@paint.name} has been created")
-    expect(page).to have_content(@paint.description.to_s)
-    expect(page).to have_content(@paint.price.to_s)
-    expect(page).to have_css("img[src*='#{@paint.image}']")
-    expect(page).to have_content(@paint.inventory.to_s)
+    expect(page).to have_content("#{paint.name} has been created")
+    expect(page).to have_content(paint.description.to_s)
+    expect(page).to have_content(paint.price.to_s)
+    expect(page).to have_css("img[src*='#{paint.image}']")
+    expect(page).to have_content(paint.inventory.to_s)
+  end
+
+  it 'I fill out an item form incorrectly, the form stays populated, I get a flash message' do
+    visit '/merchant/items/new'
+
+    name = ''
+    description = ''
+    image_url = 'https://www.google.com/url?sa=i&source=imgres&cd=&ved=2ahUKEwjQ4YqU_sTkAhXDrZ4KHW6EBv8QjRx6BAgBEAQ&url=https%3A%2F%2Fwww.paint.org%2F&psig=AOvVaw2VOzStgtf0UEdDbD7r1utX&ust=1568161284764759'
+    price = 25
+    inventory = 5
+
+    fill_in 'Name', with: name
+    fill_in 'Description', with: description
+    fill_in 'Image', with: image_url
+    fill_in 'Price', with: price
+    fill_in 'Inventory', with: inventory
+    click_button 'Create Item'
+
+    # expect(current_path).to eq('/merchant/items.')
+    expect(find_field('Price').value).to eq(price.to_s)
+    expect(find_field('Inventory').value).to eq(inventory.to_s)
   end
 end
