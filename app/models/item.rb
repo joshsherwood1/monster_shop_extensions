@@ -37,12 +37,6 @@ class Item <ApplicationRecord
 
   def toggle
     self.update(active?: !active?)
-    # if self.active? == true
-    #   self.update(active?: false)
-    # elsif self.active? == false
-    #   self.update(active?: true)
-    # end
-    # self
   end
 
   def self.most_popular_items
