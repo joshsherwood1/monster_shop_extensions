@@ -45,7 +45,6 @@ describe "As an Admin User" do
       click_link("#{@user_3.name}")
     end
     expect(current_path).to eq("/admin/users/#{@user_3.id}")
-# Only admin users can reach this path.
   end
 
   it "I can see user profile page" do

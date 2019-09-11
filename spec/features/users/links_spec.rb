@@ -41,7 +41,6 @@ describe "User can access link to their profile" do
           expect(page).to have_content("Logged in as #{name}")
       end
 
-      #is this test necessary?
       visit "/merchants"
       within ".topnav" do
         expect(page).to have_link("Profile")

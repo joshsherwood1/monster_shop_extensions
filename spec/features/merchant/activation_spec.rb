@@ -26,13 +26,11 @@ describe "As a mechant admin" do
       expect(page).to_not have_link("Deactivate")
     end
     within "#merchant-item-#{@tire.id}" do
-      #can get rid of line below once test passing
       expect(page).to have_link("Deactivate")
       click_link "Deactivate"
     end
     expect(current_path).to eq("/merchant/items")
     expect(page).to have_content("#{@tire.name} no longer for sale")
-    # expect(@tire.active?).to eq(false)
   end
 
   it "I can Activate items on item page" do

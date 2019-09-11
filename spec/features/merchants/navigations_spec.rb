@@ -19,9 +19,5 @@ describe "As a mechant employee or merchant admin" do
     within '.topnav' do
       expect(page).to have_link("Merchant Dashboard")
     end
-
-    #not sure if this is the right path
-    #expect(current_path).to eq("/merchant/dashboard")
-
   end
 end

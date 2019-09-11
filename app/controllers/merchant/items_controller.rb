@@ -1,4 +1,5 @@
 class Merchant::ItemsController < Merchant::BaseController
+  before_action :set_item, only: [:edit, :update, :destroy]
   def index
     @merchant = Merchant.find(current_user.merchant_id)
   end
@@ -12,11 +13,9 @@ class Merchant::ItemsController < Merchant::BaseController
 
   def edit
     @merchant = Merchant.find(current_user.merchant_id)
-    @item = Item.find(params[:id])
   end
 
   def update
-    @item = Item.find(params[:id])
     @item.update(item_params)
     if @item.save
       redirect_to '/merchant/items'
@@ -28,11 +27,9 @@ class Merchant::ItemsController < Merchant::BaseController
   end
 
   def destroy
-    item = Item.find(params[:id])
-    Review.where(item_id: item.id).destroy_all
-    item.destroy
+    @item.destroy
     redirect_to '/merchant/items'
-    flash[:success] = "#{item.name} has been deleted"
+    flash[:success] = "#{@item.name} has been deleted"
   end
 
   def toggle
@@ -65,5 +62,9 @@ class Merchant::ItemsController < Merchant::BaseController
 
   def item_params
     params.require(:item).permit(:name, :description, :price, :inventory, :image)
+  end
+
+  def set_item
+    @item = Item.find(params[:id])
   end
 end

@@ -49,7 +49,6 @@ describe 'User Site Navigation' do
 
       visit "/cart"
       expect(current_path).to eq("/cart")
-
     end
   end
 end

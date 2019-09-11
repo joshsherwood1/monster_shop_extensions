@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_user, only: [:show]
+  before_action :cur_user, only: [:edit, :password_edit, :update]
 
   def new
     @user = User.new
@@ -24,19 +25,15 @@ class UsersController < ApplicationController
     elsif current_user
       @user = current_user
     end
-    @user
   end
 
   def edit
-    @user = current_user
   end
 
   def password_edit
-    @user = current_user
   end
 
   def update
-    @user = current_user
     @user.update(user_params)
     if user_params.include?(:password)
       redirect_to '/profile'
@@ -50,7 +47,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   private
 
   def require_user
@@ -59,5 +55,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
+  end
+
+  def cur_user
+    @user = current_user
   end
 end

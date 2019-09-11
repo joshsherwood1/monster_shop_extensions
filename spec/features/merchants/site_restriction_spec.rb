@@ -17,7 +17,6 @@ describe 'Merchant Site Navigation' do
 
       visit "/admin"
       expect(page).to have_content("The page you were looking for doesn't exist (404)")
-
     end
   end
 end

@@ -41,7 +41,6 @@ describe "when regular user visits cart" do
 
     expect(current_path).to eq("/profile/orders")
     order = Order.last
-    #might need to add more tests to make sure order is in system
     expect(order.status).to eq("pending")
     expect(order.user_id).to eq(@regular_user.id)
     expect(page).to have_content("Order Created!")

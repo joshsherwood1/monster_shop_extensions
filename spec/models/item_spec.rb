@@ -75,6 +75,7 @@ describe Item, type: :model do
       @chain.toggle
       expect(@chain.active?).to eq(true)
     end
+  end
 
   describe "class methods" do
     before(:each) do
@@ -120,8 +121,6 @@ describe Item, type: :model do
       @green_helmet = @meg.items.create(name: "Pink Helmet", description: "Very pink helmet!", price: 51, inventory: 12)
       @green_helmet.show_default_image
       expect(@green_helmet.image).to eq("https://thumbs.dreamstime.com/b/coming-soon-neon-sign-brick-wall-background-87865865.jpg")
-    end
-
     end
   end
 end

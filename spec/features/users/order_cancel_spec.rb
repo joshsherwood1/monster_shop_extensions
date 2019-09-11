@@ -43,24 +43,16 @@ describe "when regular user visits cart" do
     click_button "Create Order"
 
     order_1 = Order.last
-    # binding.pry
     item_1 = order_1.items.last
     item_order_1 = order_1.item_orders.last
     visit "/profile/orders/#{order_1.id}"
     click_link "Cancel Order"
-    # binding.pry
     expect(item_order_1.status).to eq("unfulfilled")
-    #fails test but seems to work in development
-    #if I look at the Order.last it is cancelled
-    # order_1.reload
-    # expect(order_1.status).to eq("cancelled")
     expect(current_path).to eq("/profile")
     expect(page).to have_content("Order #{order_1.id} has been cancelled")
     visit "/profile/orders/#{order_1.id}"
     expect(page).to have_content("Order status: cancelled")
 
-  # I see a button or link to cancel the order_1 only if the order is still pending
-  # - Any item quantities in the order that were previously fulfilled have their quantities returned to their respective merchant's inventory for that item.
   end
   it "I cannot cancel my orders if status is shipped" do
     @order_2 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 1)
@@ -73,6 +65,4 @@ describe "when regular user visits cart" do
     visit "/profile/orders/#{@order_2.id}"
     expect(page).to have_link("Cancel Order")
   end
-
-
 end

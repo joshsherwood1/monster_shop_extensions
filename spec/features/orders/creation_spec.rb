@@ -116,7 +116,5 @@ describe("Order Creation") do
       expect(page).to have_content("Please complete address form to create an order.")
       expect(page).to have_button("Create Order")
     end
-
-
   end
 end

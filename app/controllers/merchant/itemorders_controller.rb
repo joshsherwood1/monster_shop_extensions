@@ -9,6 +9,6 @@ class Merchant::ItemordersController < Merchant::BaseController
       order.packaged
     end
     redirect_to "/merchant/orders/#{@item_order.order_id}"
-    flash[:success] = "#{Item.find(@item_order.item_id).name} is now fulfilled"
+    flash[:success] = "#{item.name} is now fulfilled"
   end
 end

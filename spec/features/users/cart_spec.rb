@@ -32,7 +32,6 @@ describe 'User Cart Checkout' do
       visit "/items/#{@green_pencil.id}"
       click_on "Add To Cart"
 
-
       expect(page).to have_content("You cannot add #{@green_pencil.name} to your cart because it is inactive")
     end
   end

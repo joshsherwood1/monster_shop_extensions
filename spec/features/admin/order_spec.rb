@@ -47,7 +47,8 @@ describe "Admin can see all orders" do
     expect(page).to_not have_link('Edit Profile')
   end
 
-  it "they can see button to ship packaged orders, and when ship button is clicked, the status of the order changes to shipped" do
+  it "they can see button to ship packaged orders, and when ship button is clicked,
+    the status of the order changes to shipped" do
     visit '/admin'
     within "#order-id-#{@order_3.id}" do
       expect(page).to have_content("Order Status: packaged")
@@ -59,12 +60,4 @@ describe "Admin can see all orders" do
       expect(page).to have_content("Order Status: shipped")
     end
   end
-
-
-#   As an admin user
-# When I log into my dashboard, "/admin/dashboard"
-# Then I see any "packaged" orders ready to ship.
-# Next to each order I see a button to "ship" the order.
-# When I click that button for an order, the status of that order changes to "shipped"
-# And the user can no longer "cancel" the order.
 end

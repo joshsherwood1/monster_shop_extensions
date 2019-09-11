@@ -52,7 +52,6 @@ RSpec.describe 'Site Navigation' do
       end
 
       expect(current_path).to eq('/register')
-
     end
   end
 end
