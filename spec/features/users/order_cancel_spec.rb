@@ -62,6 +62,17 @@ describe "when regular user visits cart" do
   # I see a button or link to cancel the order_1 only if the order is still pending
   # - Any item quantities in the order that were previously fulfilled have their quantities returned to their respective merchant's inventory for that item.
   end
+  it "I cannot cancel my orders if status is shipped" do
+    @order_2 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 1)
+    @itemorder_4 = ItemOrder.create(order_id: @order_2.id, item_id: @tire.id, quantity: 1, price: 100, status: 1)
+    @order_3 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 2)
+    @itemorder_6 = ItemOrder.create(order_id: @order_3.id, item_id: @pencil.id, quantity: 100, price: 2, status: 1)
+
+    visit "/profile/orders/#{@order_3.id}"
+    expect(page).to_not have_link("Cancel Order")
+    visit "/profile/orders/#{@order_2.id}"
+    expect(page).to have_link("Cancel Order")
+  end
 
 
 end

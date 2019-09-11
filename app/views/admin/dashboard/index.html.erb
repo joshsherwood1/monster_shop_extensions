@@ -1,7 +1,12 @@
 <% @sorted_orders.each do |order| %>
   <section id="order-id-<%=order.id%>">
-    <p><%= order.id %></p>
+    <h4>Order: <%= order.id %></h4>
     <%= link_to "Placed by: #{order.name}", "/admin/users/#{order.user.id}", method: :get %>
     <p>Date created: <%= order.created_at %></p>
+    <p>Order Status: <%= order.status %></p>
+    <% if order.status == "packaged"%>
+      <%= button_to "Ship Order #{order.id}", "/admin/orders/#{order.id}/ship", method: :patch %>
+    <% end %>
+    <br>
   </section>
 <% end %>

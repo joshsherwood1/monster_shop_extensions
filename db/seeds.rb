@@ -81,4 +81,4 @@ merchant_admin = User.create(  name: "Sam",
                     merchant_id: bike_shop.id)
 order_1 = regular_user.orders.create(name: "Sam Jackson", address: "223 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
 ItemOrder.create(order_id: order_1.id, item_id: tire.id, quantity: 2, price: 100)
-ItemOrder.create(order_id: order_1.id, item_id: pull_toy.id, quantity: 2, price: 10)
+ItemOrder.create(order_id: order_1.id, item_id: pull_toy.id, quantity: 3, price: 10)
