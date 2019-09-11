@@ -4,8 +4,10 @@ class Merchant::ItemsController < Merchant::BaseController
   end
 
   def new
-    @merchant = Merchant.find(current_user.merchant_id)
-    @item = Item.new
+    if current_merchant_admin?
+      @merchant = Merchant.find(current_user.merchant_id)
+      @item = Item.new
+    end
   end
 
   def edit
