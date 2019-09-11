@@ -14,7 +14,6 @@ class UsersController < ApplicationController
     else
       flash[:error] = @user.errors.full_messages.uniq
       render :new
-      # redirect_to '/register'
     end
   end
 
