@@ -14,7 +14,6 @@ class UsersController < ApplicationController
     else
       flash[:error] = @user.errors.full_messages.uniq
       render :new
-      # redirect_to '/register'
     end
   end
 
@@ -58,9 +57,7 @@ class UsersController < ApplicationController
     render file: "/public/404" unless current_user
   end
 
-  #Need to make sure that user_params doesn't store password
-
   def user_params
-    params.permit(:name, :address, :city, :state, :zip, :email, :password)
+    params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
   end
 end

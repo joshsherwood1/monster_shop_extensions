@@ -28,10 +28,10 @@ describe "As a mechant employee" do
     @order_1 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
     @order_2 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
     @itemorder = ItemOrder.create(order_id: @order_1.id, item_id: @tire.id, quantity: 2, price: 100)
-    ItemOrder.create(order_id: @order_1.id, item_id: @paper.id, quantity: 2, price: 20)
-    ItemOrder.create(order_id: @order_1.id, item_id: @pencil.id, quantity: 3, price: 2)
-    ItemOrder.create(order_id: @order_2.id, item_id: @tire.id, quantity: 1, price: 100)
-    ItemOrder.create(order_id: @order_2.id, item_id: @pencil.id, quantity: 4, price: 2)
+    ItemOrder.create(order_id: @order_1.id, item_id: @paper.id, quantity: 2, price: 20, merchant_id: @bike_shop.id)
+    ItemOrder.create(order_id: @order_1.id, item_id: @pencil.id, quantity: 3, price: 2, merchant_id: @bike_shop.id)
+    ItemOrder.create(order_id: @order_2.id, item_id: @tire.id, quantity: 1, price: 100, merchant_id: @meg.id)
+    ItemOrder.create(order_id: @order_2.id, item_id: @pencil.id, quantity: 4, price: 2, merchant_id: @bike_shop.id)
 
     visit '/login'
 
@@ -66,12 +66,18 @@ describe "As a mechant employee" do
   it 'When I visit an order show page I see the customer info and order info specifically for my merchant' do
     visit '/merchant'
     click_link "#{@order_1.id}"
-    expect(current_path).to eq("/orders/#{@order_1.id}")
+    expect(current_path).to eq("/merchant/orders/#{@order_1.id}")
     expect(page).to have_content("#{@regular_user.name}")
     expect(page).to have_content("#{@regular_user.address}")
-    expect(page).to have_content("#{@tire.name}")
-    expect(page).to have_css("img[src*='#{@tire.image}']")
-    expect(page).to have_content("#{@tire.price}")
+    expect(page).to have_content("#{@paper.name}")
+    expect(page).to have_css("img[src*='#{@paper.image}']")
+    expect(page).to have_content("#{@paper.price}")
+    expect(page).to have_content("#{@pencil.name}")
+    expect(page).to have_css("img[src*='#{@pencil.image}']")
+    expect(page).to have_content("#{@pencil.price}")
+    expect(page).to_not have_content("#{@tire.name}")
+    expect(page).to_not have_css("img[src*='#{@tire.image}']")
+    expect(page).to_not have_content("#{@tire.price}")
     expect(page).to have_content("#{@itemorder.quantity}")
   end
 

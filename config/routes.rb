@@ -35,7 +35,6 @@ Rails.application.routes.draw do
   get "/orders/new", to: "orders#new"
   post "/orders", to: "orders#create"
   get "/orders/:order_id", to: "orders#show"
-  #might want to change cancel to update
   patch "/orders/:order_id", to: "orders#cancel"
   get "/profile/orders/:order_id", to: "orders#show"
 
@@ -48,7 +47,6 @@ Rails.application.routes.draw do
   get '/profile/password_edit', to: 'users#password_edit'
   patch '/profile', to: 'users#update'
 
-  #I think login action is like a new action, could also call it new
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
@@ -57,6 +55,7 @@ Rails.application.routes.draw do
   namespace :merchant do
     get '/', to: "dashboard#index"
     patch '/items/:item_id', to: "items#toggle"
+    get '/orders/:order_id', to: "orders#show"
     resources :items
     patch '/itemorders/:id/fulfill', to: "itemorders#fulfill"
   end
@@ -68,6 +67,5 @@ Rails.application.routes.draw do
     patch '/merchants/:merchant_id', to: "merchants#toggle"
     get '/merchants/:merchant_id', to: "merchants#show"
   end
-  #does this need to be more protected so other users can edit?
   get '/admin/users/:user_id', to: "users#show"
 end
