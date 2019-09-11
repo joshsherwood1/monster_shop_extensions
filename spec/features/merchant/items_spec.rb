@@ -92,10 +92,10 @@ describe "As a mechant admin" do
     price = 25
     inventory = 5
 
-    fill_in :name, with: name
-    fill_in :description, with: description
-    fill_in :image, with: image_url
-    fill_in :price, with: price
+    fill_in 'Name', with: name
+    fill_in 'Description', with: description
+    fill_in 'Image', with: image_url
+    fill_in 'Price', with: price
     click_button 'Create Item'
 
     expect(page).to have_content("Inventory can't be blank and Inventory is not a number")
