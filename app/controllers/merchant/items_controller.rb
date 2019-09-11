@@ -8,6 +8,7 @@ class Merchant::ItemsController < Merchant::BaseController
     @merchant = Merchant.find(current_user.merchant_id)
     @item = Item.new
   end
+  
 
   def destroy
    item = Item.find(params[:item_id])

@@ -84,6 +84,9 @@ describe "Admin user can see all merchants" do
       click_link("Disable")
     end
 
+    @dog_shop.reload
+    @pull_toy.reload
+    @dog_bone.reload
     expect(@dog_shop.enabled?).to eq(false)
     expect(@pull_toy.active?).to eq(false)
     expect(@dog_bone.active?).to eq(false)
