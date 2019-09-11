@@ -69,5 +69,34 @@ describe Order, type: :model do
       @order_1.packaged
       expect(@order_1.status).to eq("packaged")
     end
+
+    it 'shipped' do
+      @regular_user_2 =  User.create!(  name: "alec",
+                      address: "234 Main",
+                      city: "Denver",
+                      state: "CO",
+                      zip: 80204,
+                      email: "899@gmail.com",
+                      password: "password"
+                    )
+      @order_2 = @regular_user_2.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 1)
+      expect(@order_2.status).to eq("packaged")
+      @order_2.shipped
+      expect(@order_2.status).to eq("shipped")
+    end
+
+    it 'checks if all item orders of an item are fulfilled' do
+      @regular_user =  User.create!(  name: "alec",
+                      address: "234 Main",
+                      city: "Denver",
+                      state: "CO",
+                      zip: 80204,
+                      email: "890@gmail.com",
+                      password: "password"
+                    )
+      @order_1 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
+      @order_1.packaged
+      expect(@order_1.all_item_orders_fulfilled?).to eq(true)
+    end
   end
 end
