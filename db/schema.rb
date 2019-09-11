@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20190910132246) do
     t.string "name"
     t.string "description"
     t.integer "price"
-    t.string "image", default: "https://thumbs.dreamstime.com/b/coming-soon-neon-sign-brick-wall-background-87865865.jpg"
+    t.string "image"
     t.boolean "active?", default: true
     t.integer "inventory"
     t.bigint "merchant_id"
