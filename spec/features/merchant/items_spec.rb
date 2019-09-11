@@ -87,7 +87,15 @@ describe "As a mechant admin" do
       click_link 'Edit'
     end
 
+<<<<<<< HEAD
+    fill_in 'Name', with: name
+    fill_in 'Description', with: description
+    fill_in 'Image', with: image_url
+    fill_in 'Price', with: price
+    click_button 'Create Item'
+=======
     expect(current_path).to eq("/merchant/items/#{@tire.id}/edit")
+>>>>>>> dda22f43b6b1ab1c729c4fdca6b3a404804a7807
 
     expect(find_field('Name').value).to eq 'Gatorskins'
     expect(find_field('Description').value).to eq "They'll never pop!"
