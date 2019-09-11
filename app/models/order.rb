@@ -33,4 +33,10 @@ class Order <ApplicationRecord
   def all_item_orders_fulfilled?
     self.item_orders.pluck(:status).all? { |status| status == "fulfilled"}
   end
+
+  def show_order(id)
+    # binding.pry
+      self.item_orders.select("item_orders.*").where("merchant_id = #{id}")
+  end
+
 end

@@ -17,7 +17,6 @@
       <% else %>
         <p style= "color:red">Inactive</p>
       <% end %>
-      <p><%= link_to "Edit Item", "/items/#{@item.id}/edit" %></p>
       <% unless !@item.no_orders? || cart.quantity_of(@item.id) != 0 %>
         <p><%= link_to "Delete Item", "/items/#{@item.id}", method: :delete if @item.no_orders?%></p>
       <% end %>
