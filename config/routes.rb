@@ -56,11 +56,8 @@ Rails.application.routes.draw do
   # ,as: :user
   namespace :merchant do
     get '/', to: "dashboard#index"
-    get '/items', to: "items#index"
     patch '/items/:item_id', to: "items#toggle"
-    delete '/items/:item_id', to: "items#destroy"
-    resources :items, only: [:new]
-    post '/items', to: 'items#create'
+    resources :items
     patch '/itemorders/:id/fulfill', to: "itemorders#fulfill"
   end
 

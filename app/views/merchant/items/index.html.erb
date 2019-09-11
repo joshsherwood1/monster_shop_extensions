@@ -13,6 +13,7 @@
       <% end %>
       <% if current_merchant_admin? %>
       <p><%= button_to "Delete", "/merchant/items/#{item.id}", method: :delete if item.no_orders?%></p>
+      <p><%= link_to "Edit", "/merchant/items/#{item.id}/edit" %></p>
       <% end %>
       <% if current_merchant_admin? && item.active? %>
         <p>Active</p>
