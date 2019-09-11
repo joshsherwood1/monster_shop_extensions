@@ -19,12 +19,9 @@
 </section>
 
   <section id="order-info-<%=@order.id%>">
-    <h2> <%=link_to "Order ID: #{@order.id}", "/profile/orders/#{@order.id}" %> </h2>
+    <h2> Order ID: <%= @order.id %></h2>
     <p>Date created: <%= @order.created_at.strftime("%d %b %y") %></p>
-    <p>Last update: <%= @order.updated_at.strftime("%d %b %y") %></p>
     <p>Order status: <%= @order.status%></p>
-    <p>Total items: <%= @order.total_quantity%></p>
-    <p>Grand total: <%= @order.grandtotal %></p>
   </section>
 
 <h1 align = "center">Order Info</h1>
@@ -61,14 +58,8 @@
   <% end %>
 </table>
 
-<section id="grandtotal">
-  <p>Total: <%=number_to_currency(@order.grandtotal)%></p>
-</section>
 <section id="cancel">
   <% if (@order.status == "pending") || (@order.status == "packaged")%>
     <%=link_to "Cancel Order", "/orders/#{@order.id}", method: :patch%>
   <% end %>
-</section>
-<section id="datecreated">
-  <p> <%= @order.created_at%></p>
 </section>

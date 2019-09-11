@@ -38,7 +38,7 @@ describe "Admin can see all orders" do
 
     within "#order-id-#{@order_1.id}" do
       expect(page).to have_content("Placed by: #{@order_1.name}")
-      expect(page).to have_content("Date created: #{@order_1.created_at}")
+      expect(page).to have_content("Date created: #{@order_1.created_at.strftime("%d %b %y")}")
       expect(page).to have_content("Order Status: #{@order_1.status}")
       click_link("Placed by: #{@order_1.name}")
     end

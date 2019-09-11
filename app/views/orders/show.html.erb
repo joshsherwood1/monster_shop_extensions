@@ -49,15 +49,6 @@
         <td><p><%= number_to_currency(item_order.price)%></p></td>
         <td><p><%= item_order.quantity%></p></td>
         <td><p><%= number_to_currency(item_order.subtotal)%></p></td>
-        <% if Item.find(item_order.item_id).merchant_id == @user.merchant_id %>
-          <% if item_order.status == "fulfilled"%>
-            <td><p><%= Item.find(item_order.item_id).name %> is fulfilled</p></td>
-          <% elsif (Item.find(item_order.item_id).inventory < item_order.quantity) && (item_order.status == "unfulfilled") %>
-            <td><p> <%= Item.find(item_order.item_id).name %> cannot be fulfilled at this time since there is not enough inventory for item </p></td>
-          <% elsif item_order.status == "unfulfilled" %>
-            <td><p><%= link_to "Fulfill #{Item.find(item_order.item_id).name}", "/merchant/itemorders/#{item_order.id}/fulfill", method: :patch %> </p></td>
-          <% end %>
-        <% end %>
       </section>
     </tr>
   <% end %>
