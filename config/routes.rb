@@ -67,6 +67,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '/', to: "dashboard#index"
+    patch '/orders/:order_id/ship', to: "dashboard#ship"
     get '/users', to: "users#index"
   end
   #does this need to be more protected so other users can edit?
