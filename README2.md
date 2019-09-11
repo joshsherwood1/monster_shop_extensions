@@ -1,5 +1,5 @@
-### Monster Shop
-# Group project by: Alec Wells, Christopher Kelling, and Josh Sherwood
+# Monster Shop
+### Group project by: Alec Wells, Christopher Kelling, and Josh Sherwood
 
 ## Project Overview:
 
@@ -7,10 +7,12 @@
    
    Website is hosted on heroku at this address: https://secure-spire-23139.herokuapp.com/
 
-## Project New Material:
+## New/Notable Material in Project:
 
-    - Users
-    - sessions
-    - passwords
-    - form for
-    - Use grouping and aggregate functions with SQL and ActiveRecord to obtain specific information from database
+   * Use grouping and aggregate functions with SQL and ActiveRecord to obtain specific information from database
+   * Join tables using ActiveRecord to obtain information from multiple tables
+   * Use authentication and authorization to verify users and give certain users access to certain functionality
+   * Add namespace and resource syntax in routes file
+   * Create ActiveRecord association many to many relationship between models
+   * Use form helper form_for to create forms
+   * User password encryption to hash user passwords before storing in the database
