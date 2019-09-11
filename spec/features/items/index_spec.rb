@@ -118,7 +118,7 @@ RSpec.describe "Items Index Page" do
         expect(page).to_not have_css("img[src*='#{@dog_bone.image}']")
     end
 
-    xit "I can click on item image and it redirects me to an item show page"do
+    it "I can click on item image and it redirects me to an item show page"do
       user = User.create(  name: "alec",
         address: "234 Main",
         city: "Denver",
@@ -140,8 +140,9 @@ RSpec.describe "Items Index Page" do
 
       within "#item-#{@tire.id}" do
         expect(page).to have_css("img[src*='#{@tire.image}']")
-        find("img[src*='#{@tire.image}']").click
+        find("#picture-link-#{@tire.id}").click
       end
+
       expect(current_path).to eq("/items/#{@tire.id}")
     end
   end
