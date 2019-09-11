@@ -44,4 +44,12 @@ class Item <ApplicationRecord
     # end
     # self
   end
+
+  def self.most_popular_items
+    joins(:item_orders).where(active?: true).group(:id).select("items.*, sum(quantity) as quantity_purchased").order("quantity_purchased DESC").limit(5)
+  end
+
+  def self.least_popular_items
+    joins(:item_orders).where(active?: true).group(:id).select("items.*, sum(quantity) as quantity_purchased").order("quantity_purchased").limit(5)
+  end
 end

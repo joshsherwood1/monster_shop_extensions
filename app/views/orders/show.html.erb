@@ -67,7 +67,9 @@
   <p>Total: <%=number_to_currency(@order.grandtotal)%></p>
 </section>
 <section id="cancel">
-  <%=link_to "Cancel Order", "/orders/#{@order.id}", method: :patch%>
+  <% if (@order.status == "pending") || (@order.status == "packaged")%>
+    <%=link_to "Cancel Order", "/orders/#{@order.id}", method: :patch%>
+  <% end %>
 </section>
 <section id="datecreated">
   <p> <%= @order.created_at%></p>

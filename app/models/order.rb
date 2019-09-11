@@ -21,7 +21,16 @@ class Order <ApplicationRecord
     self.save
   end
 
+  def shipped
+    self.status = 2
+    self.save
+  end
+
   def self.sort_orders
     order(status: :asc)
+  end
+
+  def all_item_orders_fulfilled?
+    self.item_orders.pluck(:status).all? { |status| status == "fulfilled"}
   end
 end

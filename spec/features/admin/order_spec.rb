@@ -18,6 +18,7 @@ describe "Admin can see all orders" do
     @item_order_3 = @order_1.item_orders.create!(item: @dog_bone, price: @dog_bone.price, quantity: 2)
     @item_order_4 = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 2)
     @item_order_5 = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 2)
+    @item_order_6 = @order_3.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 7)
 
     visit '/login'
 
@@ -38,10 +39,32 @@ describe "Admin can see all orders" do
     within "#order-id-#{@order_1.id}" do
       expect(page).to have_content("Placed by: #{@order_1.name}")
       expect(page).to have_content("Date created: #{@order_1.created_at}")
+      expect(page).to have_content("Order Status: #{@order_1.status}")
       click_link("Placed by: #{@order_1.name}")
     end
     expect(current_path).to eq("/admin/users/#{@user_1.id}")
     expect(page).to have_content(@user_1.name)
     expect(page).to_not have_link('Edit Profile')
   end
+
+  it "they can see button to ship packaged orders, and when ship button is clicked, the status of the order changes to shipped" do
+    visit '/admin'
+    within "#order-id-#{@order_3.id}" do
+      expect(page).to have_content("Order Status: packaged")
+      expect(page).to have_button("Ship Order #{@order_3.id}")
+      click_button("Ship Order #{@order_3.id}")
+    end
+    expect(current_path).to eq('/admin')
+    within "#order-id-#{@order_3.id}" do
+      expect(page).to have_content("Order Status: shipped")
+    end
+  end
+
+
+#   As an admin user
+# When I log into my dashboard, "/admin/dashboard"
+# Then I see any "packaged" orders ready to ship.
+# Next to each order I see a button to "ship" the order.
+# When I click that button for an order, the status of that order changes to "shipped"
+# And the user can no longer "cancel" the order.
 end
