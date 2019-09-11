@@ -69,7 +69,7 @@ describe "when regular user visits cart" do
       expect(page).to have_content("Last update: #{order.updated_at.strftime("%d %b %y")}")
       expect(page).to have_content("Order status: #{order.status}")
       expect(page).to have_content("Total items: #{order.total_quantity}")
-      expect(page).to have_content("Grand total: #{order.grandtotal}")
+      expect(page).to have_content("Grand total: $#{order.grandtotal}")
       expect(page).to have_link("Order ID: #{order.id}")
       click_link("Order ID: #{order.id}")
     end
@@ -96,7 +96,7 @@ describe "when regular user visits cart" do
     expect(page).to have_content("Last update: #{order.updated_at.strftime("%d %b %y")}")
     expect(page).to have_content("Order status: #{order.status}")
     expect(page).to have_content("Total items: #{order.total_quantity}")
-    expect(page).to have_content("Grand total: #{order.grandtotal}")
+    expect(page).to have_content("Grand total: $#{order.grandtotal}")
     expect(page).to have_link("Order ID: #{order.id}")
 
     within "#item-#{item.id}" do
