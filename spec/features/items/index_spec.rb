@@ -157,7 +157,7 @@ RSpec.describe "Items Index Page" do
       expect(current_path).to eq("/items/#{@tire.id}")
     end
 
-    it "I see quantity purchased statistics about the most and least popular items "do
+    it "I see quantity purchased statistics about the most and least popular active items "do
       @order_1 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
       @order_2 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
       @order_3 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
@@ -168,15 +168,18 @@ RSpec.describe "Items Index Page" do
       @itemorder_5 = ItemOrder.create(order_id: @order_2.id, item_id: @helmet.id, quantity: 3, price: 50)
       @itemorder_6 = ItemOrder.create(order_id: @order_3.id, item_id: @pencil.id, quantity: 72, price: 2)
       @itemorder_7 = ItemOrder.create(order_id: @order_3.id, item_id: @pink_helmet.id, quantity: 5, price: 51)
+      @itemorder_8 = ItemOrder.create(order_id: @order_3.id, item_id: @dog_bone.id, quantity: 11, price: 51)
 
       visit "/items"
       within "#most-popular-items" do
         expect(page).to have_content("Most Popular Items:")
         expect(page).to have_content("#{@pencil.name}: 72 purchased so far!\n#{@pink_helmet.name}: 8 purchased so far!\n#{@pull_toy.name}: 4 purchased so far!\n#{@helmet.name}: 3 purchased so far!\n#{@tire.name}: 2 purchased so far!")
+        expect(page).to_not have_content("#{@dog_bone.name}")
       end
       within "#least-popular-items" do
         expect(page).to have_content("Least Popular Items:")
         expect(page).to have_content("#{@paper.name}: 1 purchased so far!\n#{@tire.name}: 2 purchased so far!\n#{@helmet.name}: 3 purchased so far!\n#{@pull_toy.name}: 4 purchased so far!\n#{@pink_helmet.name}: 8 purchased so far!")
+        expect(page).to_not have_content("#{@dog_bone.name}")
       end
     end
   end
