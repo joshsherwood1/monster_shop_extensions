@@ -35,7 +35,6 @@ class Order <ApplicationRecord
   end
 
   def show_order(id)
-    # binding.pry
       self.item_orders.select("item_orders.*").where("merchant_id = #{id}")
   end
 
