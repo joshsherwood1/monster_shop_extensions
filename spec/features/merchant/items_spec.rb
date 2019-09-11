@@ -88,11 +88,6 @@ describe "As a mechant admin" do
     end
 
     expect(current_path).to eq("/merchant/items/#{@tire.id}/edit")
-<<<<<<< HEAD
-
-    expect(current_path).to eq("/merchant/items/#{@tire.id}/edit")\
-=======
->>>>>>> 44d44f22f69d0c103a1216c9d72fa1c88fdad1b1
 
     expect(find_field('Name').value).to eq 'Gatorskins'
     expect(find_field('Description').value).to eq "They'll never pop!"
