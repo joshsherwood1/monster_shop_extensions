@@ -3,8 +3,8 @@ require 'rails_helper'
 describe "As a mechant admin" do
   before(:each) do
     @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 11234)
-    @tire = @bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
     @paper = @bike_shop.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
+    @tire = @bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
     @user = User.create(name: "alec", address: "234 Main", city: "Denver", state: "CO", zip: 80204, email: "a@gmail.com", password: "password", role: 2, merchant_id: @bike_shop.id)
     @order = @user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
     ItemOrder.create(order_id: @order.id, item_id: @paper.id, quantity: 2, price: 20)
@@ -76,28 +76,32 @@ describe "As a mechant admin" do
     fill_in 'Inventory', with: inventory
     click_button 'Create Item'
 
-    # expect(current_path).to eq('/merchant/items.')
     expect(find_field('Price').value).to eq(price.to_s)
     expect(find_field('Inventory').value).to eq(inventory.to_s)
   end
 
-  it 'When I do not fill out all fields in new item form, I will see flash message indicating which fields need to be filled to complete form' do
+  it 'I can edit an item. All the rules for creating an item apply.' do
     visit '/merchant/items'
-    click_link 'Add a New Item'
-    expect(current_path).to eq('/merchant/items/new')
 
-    name = 'Paint'
-    description = 'Change the color'
-    image_url = 'https://www.google.com/url?sa=i&source=imgres&cd=&ved=2ahUKEwjQ4YqU_sTkAhXDrZ4KHW6EBv8QjRx6BAgBEAQ&url=https%3A%2F%2Fwww.paint.org%2F&psig=AOvVaw2VOzStgtf0UEdDbD7r1utX&ust=1568161284764759'
-    price = 25
-    inventory = 5
+    within "#merchant-item-#{@tire.id}" do
+      click_link 'Edit'
+    end
 
-    fill_in :name, with: name
-    fill_in :description, with: description
-    fill_in :image, with: image_url
-    fill_in :price, with: price
-    click_button 'Create Item'
+    expect(current_path).to eq("/merchant/items/#{@tire.id}/edit")
 
-    expect(page).to have_content("Inventory can't be blank and Inventory is not a number")
+    expect(find_field('Name').value).to eq 'Gatorskins'
+    expect(find_field('Description').value).to eq "They'll never pop!"
+    expect(find_field('Image').value).to eq('https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588')
+    expect(find_field('Price').value).to eq '100'
+    expect(find_field('Inventory').value).to eq '12'
+
+    description = 'They pop sometimes'
+    fill_in 'Description', with: description
+    click_button 'Update Item'
+
+    expect(current_path).to eq('/merchant/items')
+    expect(page).to have_content("#{@tire.name} has been updated")
+    expect(page).to_not have_content("They'll never pop!")
+    expect(page).to have_content('They pop sometimes')
   end
 end
