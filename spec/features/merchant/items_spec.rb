@@ -88,11 +88,17 @@ describe "As a mechant admin" do
     end
 
     expect(current_path).to eq("/merchant/items/#{@tire.id}/edit")
+
     expect(find_field('Name').value).to eq 'Gatorskins'
     expect(find_field('Description').value).to eq "They'll never pop!"
     expect(find_field('Image').value).to eq('https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588')
     expect(find_field('Price').value).to eq '100'
     expect(find_field('Inventory').value).to eq '12'
+
+    description = ''
+    fill_in 'Description', with: description
+    click_button 'Update Item'
+    expect(page).to have_content("Description can't be blank")
 
     description = 'They pop sometimes'
     fill_in 'Description', with: description
