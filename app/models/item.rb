@@ -46,4 +46,9 @@ class Item <ApplicationRecord
   def self.least_popular_items
     joins(:item_orders).where(active?: true).group(:id).select("items.*, sum(quantity) as quantity_purchased").order("quantity_purchased").limit(5)
   end
+
+  def show_default_image
+     self.image = "https://thumbs.dreamstime.com/b/coming-soon-neon-sign-brick-wall-background-87865865.jpg"
+     self.save
+  end
 end
