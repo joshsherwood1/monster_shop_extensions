@@ -6,13 +6,13 @@
 <% end %>
 <section id="most-popular-items">
 <p>Most Popular Items:</p>
-  <% Item.most_popular_items.each do |item| %>
+  <% @items.most_popular_items.each do |item| %>
     <p><%= item.name %>: <%= item.quantity_purchased %> purchased so far!</p>
   <% end %>
 </section>
 <section id="least-popular-items">
 <p>Least Popular Items:</p>
-  <% Item.least_popular_items.each do |item| %>
+  <% @items.least_popular_items.each do |item| %>
     <p><%= item.name %>: <%= item.quantity_purchased %> purchased so far!</p>
   <% end %>
 </section>
