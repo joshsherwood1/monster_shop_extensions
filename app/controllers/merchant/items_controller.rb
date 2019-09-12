@@ -49,6 +49,9 @@ class Merchant::ItemsController < Merchant::BaseController
   def create
     @merchant = Merchant.find(current_user.merchant_id)
     @item = @merchant.items.create(item_params)
+    if @item.image == ""
+     @item.show_default_image
+    end
     if @item.save
       redirect_to "/merchant/items"
       flash[:success] = "#{@item.name} has been created"

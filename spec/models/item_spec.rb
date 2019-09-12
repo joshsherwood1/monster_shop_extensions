@@ -111,10 +111,17 @@ describe Item, type: :model do
     it "sorts top 5 items based on most quantity ordered" do
       expect(Item.most_popular_items).to eq([@pencil, @pink_helmet, @pull_toy, @helmet, @tire])
     end
-    
+
     it "sorts top 5 items based on least quantity ordered" do
       expect(Item.least_popular_items).to eq([@paper, @tire, @helmet, @pull_toy, @pink_helmet])
     end
-  end
+
+    it "adds image if no image is given in new item creation form" do
+      @green_helmet = @meg.items.create(name: "Pink Helmet", description: "Very pink helmet!", price: 51, inventory: 12)
+      @green_helmet.show_default_image
+      expect(@green_helmet.image).to eq("https://thumbs.dreamstime.com/b/coming-soon-neon-sign-brick-wall-background-87865865.jpg")
+    end
+
+    end
   end
 end

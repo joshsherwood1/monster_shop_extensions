@@ -2,7 +2,7 @@
   <section id="order-id-<%=order.id%>">
     <h4>Order: <%= order.id %></h4>
     <%= link_to "Placed by: #{order.name}", "/admin/users/#{order.user.id}", method: :get %>
-    <p>Date created: <%= order.created_at %></p>
+    <p>Date created: <%= order.created_at.strftime("%d %b %y") %></p>
     <p>Order Status: <%= order.status %></p>
     <% if order.status == "packaged"%>
       <%= button_to "Ship Order #{order.id}", "/admin/orders/#{order.id}/ship", method: :patch %>

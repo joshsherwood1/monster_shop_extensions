@@ -19,6 +19,19 @@
         <% else %>
           <%= link_to "Cart: #{cart.total_items}", "/cart" %>
         <% end %>
+        <% if current_user %>
+          <%= link_to "Logout", "/logout", method: :delete %>
+          <%= link_to "Profile", "/profile" %>
+          <p id="logged-in-navbar">Logged in as <%= current_user.name %></p>
+          <% if current_merchant_admin? || current_merchant_employee? %>
+            <%= link_to 'Merchant Dashboard', '/merchant' %>
+          <% end %>
+        <% else %>
+        <%= link_to 'Login', '/login' %>
+        </section>
+        <section>
+          <%= link_to 'Register', '/register' %>
+        <% end %>
       </section>
       <section id="home-pic">
         <%= link_to "/" do %>
@@ -28,21 +41,6 @@
           </section>
         <% end %>
       </section>
-      <section>
-        <% if current_user %>
-          <%= link_to "Logout", "/logout", method: :delete %>
-          <%= link_to "Profile", "/profile" %>
-          <p>Logged in as <%= current_user.name %></p>
-          <% if current_merchant_admin? || current_merchant_employee? %>
-            <%= link_to 'Merchant Dashboard', '/merchant' %>
-          <% end %>
-        <% else %>
-        <%= link_to 'Login', '/login' %>
-      </section>
-      <section>
-        <%= link_to 'Register', '/register' %>
-      </section>
-      <% end %>
     </nav>
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">

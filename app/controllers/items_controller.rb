@@ -7,6 +7,8 @@ class ItemsController<ApplicationController
     else
       @items = Item.all
     end
+    @five_least_popular_items = Item.least_popular_items
+    @five_most_popular_items = Item.most_popular_items
   end
 
   def show
