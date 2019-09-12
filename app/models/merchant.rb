@@ -28,7 +28,7 @@ class Merchant <ApplicationRecord
   end
 
   def get_individual_orders
-    item_orders.group(:order_id).select("item_orders.order_id, sum(quantity) as total_quantity, sum(quantity * item_orders.price) as total_subtotal")
+    item_orders.group(:order_id).select("item_orders.order_id, sum(quantity) as total_quantity, sum(quantity * item_orders.price) as total_subtotal").where(status: 0)
   end
 
   def toggle
