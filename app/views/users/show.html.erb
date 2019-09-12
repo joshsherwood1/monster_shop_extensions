@@ -1,15 +1,19 @@
-<%= @user.name %>
-<%= @user.address %>
-<%= @user.city %>
-<%= @user.state %>
-<%= @user.zip %>
-<%= @user.email %>
-<% if !current_admin? %>
-  <%= link_to 'Edit Profile', '/profile/edit' %>
-  <%= link_to 'Edit Password', '/profile/password_edit' %>
-<% end %>
-<section class="my-orders-link">
-  <% unless @user.no_orders? %>
-    <%= link_to 'My Orders', '/profile/orders' %>
+<section class="header">
+<br><%= @user.name %>
+<br><%= @user.address %>
+<br><%= @user.city %>
+<br><%= @user.state %>
+<br><%= @user.zip %>
+<br><%= @user.email %>
+</section>
+  <section class="text">
+  <br><% if !current_admin? %>
+    <br><%= link_to 'Edit Profile', '/profile/edit' %>
+    <br><br><%= link_to 'Edit Password', '/profile/password_edit' %>
   <% end %>
+  <section class="my-orders-link">
+    <% unless @user.no_orders? %>
+      <br><%= link_to 'My Orders', '/profile/orders' %>
+    <% end %>
+  </section>
 </section>

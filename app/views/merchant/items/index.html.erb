@@ -1,8 +1,8 @@
 <h1>All Items</h1>
+<% if current_merchant_admin? %>
+  <p><%= link_to 'Add a New Item', '/merchant/items/new' %></p>
+<% end %>
 <section class="grid-container">
-  <% if current_merchant_admin? %>
-    <p><%= link_to 'Add a New Item', '/merchant/items/new' %></p>
-  <% end %>
   <% @merchant.items.each do |item| %>
     <section class = "grid-item" id= 'merchant-item-<%=item.id%>'>
       <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
