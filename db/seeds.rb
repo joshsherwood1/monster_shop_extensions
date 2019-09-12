@@ -15,15 +15,6 @@ regular_user = User.create!(  name: "alec",
   email: "5@gmail.com",
   password: "password"
 )
-merchant_user = User.create!(  name: "josh",
-  address: "234 Main",
-  city: "Denver",
-  state: "CO",
-  zip: 80204,
-  email: "6@gmail.com",
-  password: "password",
-  role: 1
-)
 merchant_admin_user = bike_shop.users.create!(  name: "chris",
   address: "234 Main",
   city: "Denver",
