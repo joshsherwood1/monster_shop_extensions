@@ -6,6 +6,7 @@
   <br><% if !current_admin? %>
     <br><%= link_to 'Edit Profile', '/profile/edit' %>
     <br><br><%= link_to 'Edit Password', '/profile/password_edit' %>
+    <br><br><%= link_to 'Create a new address', '/profile/addresses/new' %>
   <% end %>
   <section class="my-orders-link">
     <% unless @user.no_orders? %>

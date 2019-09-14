@@ -1,0 +1,17 @@
+<h1 align= "center">Create an Address</h1>
+<center>
+  <%= form_tag '/profile/addresses', method: :post do |f| %>
+
+    <%= text_field_tag :address_type, nil, placeholder: 'Address Type' %>
+
+    <%= text_field_tag :address, nil, placeholder: "Address" %>
+
+    <%= text_field_tag :city, nil, placeholder: "City" %>
+
+    <%= text_field_tag :state, nil, placeholder: "State" %>
+
+    <%= text_field_tag :zip, nil, placeholder: "Zip" %>
+
+    <%= submit_tag 'Create Address' %>
+  <% end %>
+</center>

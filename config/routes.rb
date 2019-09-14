@@ -46,6 +46,9 @@ Rails.application.routes.draw do
   get '/profile/password_edit', to: 'users#password_edit'
   patch '/profile', to: 'users#update'
 
+  get "/profile/addresses/new", to: "addresses#new"
+  post "/profile/addresses", to: "addresses#create"
+
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
@@ -61,7 +64,6 @@ Rails.application.routes.draw do
 
   namespace :user do
     get "/profile", to: "users#show"
-    resources :addresses
   end
 
   namespace :admin do
