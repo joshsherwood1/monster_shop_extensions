@@ -50,11 +50,14 @@ describe 'User Registration' do
     it 'they have to fill out entire form' do
 
       visit '/register'
+      name = "alec"
+
+      fill_in "Name", with: name
+
 
 
       click_button "Submit"
 
-      expect(page).to have_content("Name can't be blank")
       expect(page).to have_content("City can't be blank")
       expect(page).to have_content("State can't be blank")
       expect(page).to have_content("Zip can't be blank")
