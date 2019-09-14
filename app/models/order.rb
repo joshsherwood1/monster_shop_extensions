@@ -1,8 +1,8 @@
 class Order <ApplicationRecord
 
-  validates_presence_of :name, :address, :city, :state, :zip
   validates :status, numericality: {only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 3}
   belongs_to :user
+  belongs_to :address
   has_many :item_orders
   has_many :items, through: :item_orders
 
