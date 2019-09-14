@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: 'items#index'
-
   get "/merchants", to: "merchants#index"
   get "/merchants/new", to: "merchants#new"
   get "/merchants/:id", to: "merchants#show"
@@ -58,6 +57,11 @@ Rails.application.routes.draw do
     get '/orders/:order_id', to: "orders#show"
     resources :items
     patch '/itemorders/:id/fulfill', to: "itemorders#fulfill"
+  end
+
+  namespace :user do
+    get "/profile", to: "users#show"
+    resources :addresses
   end
 
   namespace :admin do
