@@ -6,5 +6,5 @@ class Address < ApplicationRecord
   validates :zip, presence: true
   validates_length_of :zip, :is => 5
   validates_numericality_of :zip
-  validates :address_type, presence: true, uniqueness: true
+  validates :address_type, presence: true
 end
