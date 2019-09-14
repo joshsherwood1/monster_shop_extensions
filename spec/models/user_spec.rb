@@ -16,28 +16,18 @@ describe User, type: :model do
   describe "roles" do
     it "can be created as a default user" do
       user = User.create!(name: "alec",
-                        address: "123 Main",
-                        city: "Denver",
-                        state: "CO",
-                        zip: 80222,
                         email: "623@gamil.com",
                         password: "password",
                         role: 0)
-
       expect(user.role).to eq("regular_user")
       expect(user.regular_user?).to be_truthy
     end
 
     it "can be created as a merchant_employee" do
       user = User.create(name: "alec",
-                        address: "123 Main",
-                        city: "Denver",
-                        state: "CO",
-                        zip: 80222,
                         email: "823@gamil.com",
                         password: "password",
                         role: 1)
-
       expect(user.role).to eq("merchant_employee")
       expect(user.merchant_employee?).to be_truthy
     end
@@ -46,10 +36,6 @@ describe User, type: :model do
   describe "instance methods" do
     it "can verify that a user has no orders" do
     user = User.create!(name: "alec",
-                      address: "123 Main",
-                      city: "Denver",
-                      state: "CO",
-                      zip: 80222,
                       email: "456@gamil.com",
                       password: "password",
                       role: 0)
