@@ -1,9 +1,5 @@
 <section class="header">
 <br><%= @user.name %>
-<br><%= @user.address %>
-<br><%= @user.city %>
-<br><%= @user.state %>
-<br><%= @user.zip %>
 <br><%= @user.email %>
 </section>
   <section class="text">
@@ -16,4 +12,14 @@
       <br><%= link_to 'My Orders', '/profile/orders' %>
     <% end %>
   </section>
+  <h4>Addresses</h4>
+  <% @user.addresses.each do |address| %>
+  <section id="address-<%=address.id%>">
+    <p>Address Type: <%= address.address_type %></p>
+    <p>Address: <%= address.address %></p>
+    <p>City: <%= address.city %></p>
+    <p>State: <%= address.state %></p>
+    <p>Zip Code: <%= address.zip %></p>
+  </section>
+  <% end %>
 </section>
