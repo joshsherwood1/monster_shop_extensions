@@ -49,7 +49,7 @@ describe "As a mechant employee or admin" do
 
     visit '/merchant'
     click_link "#{@order_1.id}"
-    expect(current_path).to eq("/orders/#{@order_1.id}")
+    expect(current_path).to eq("/merchant/orders/#{@order_1.id}")
 
     within "#item-#{@tire.id}" do
       expect(page).to_not have_link("Fulfill #{@tire.name}")
@@ -60,7 +60,7 @@ describe "As a mechant employee or admin" do
       click_link("Fulfill #{@paper.name}")
     end
 
-    expect(current_path).to eq("/orders/#{@order_1.id}")
+    expect(current_path).to eq("/merchant/orders/#{@order_1.id}")
     expect(page).to have_content("#{@paper.name} is now fulfilled")
     within "#item-#{@paper.id}" do
       expect(page).to_not have_link("Fulfill #{@paper.name}")
@@ -76,7 +76,7 @@ describe "As a mechant employee or admin" do
 
     visit '/merchant'
     click_link "#{@order_3.id}"
-    expect(current_path).to eq("/orders/#{@order_3.id}")
+    expect(current_path).to eq("/merchant/orders/#{@order_3.id}")
 
     within "#item-#{@pencil.id}" do
       expect(page).to_not have_link("Fulfill #{@pencil.name}")
