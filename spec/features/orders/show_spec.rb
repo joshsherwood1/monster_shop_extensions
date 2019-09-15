@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "when regular user visits cart" do
+describe "When regular user creates an order" do
   before :each do
     @regular_user = User.create!(  name: "alec", email: "5@gmail.com", password: "password")
     @address_3 = @regular_user.addresses.create(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
@@ -21,7 +21,7 @@ describe "when regular user visits cart" do
     fill_in :password, with: @regular_user.password
     click_button "Log In"
   end
-  it "they can checkout and and order is created associated with user" do
+  it "they can see shipping information and order information" do
 
     visit cart_path
     expect(page).to have_link("#{@address_3.address_type} Address: #{@address_3.address} #{@address_3.city}, #{@address_3.state} #{@address_3.zip}")
@@ -36,16 +36,33 @@ describe "when regular user visits cart" do
     click_button "Create Order"
     expect(current_path).to eq("/profile/orders")
 
-
-
     order = Order.last
-    expect(order.status).to eq("pending")
-    expect(order.user_id).to eq(@regular_user.id)
-    expect(page).to have_content("Order Created!")
+    item = order.items.last
+    item_order = order.item_orders.last
+    click_link("Order ID: #{order.id}")
+    expect(current_path).to eq("/profile/orders/#{order.id}")
+    expect(page).to have_content("Date created: #{order.created_at.strftime("%d %b %y")}")
+    expect(page).to have_content("Last update: #{order.updated_at.strftime("%d %b %y")}")
+    expect(page).to have_content("Order status: #{order.status}")
+    expect(page).to have_content("Total items: #{order.total_quantity}")
+    expect(page).to have_content("Grand total: $#{order.grandtotal}")
+    expect(page).to have_link("Order ID: #{order.id}")
 
-    visit '/cart'
-    expect(page).to have_content("Cart is currently empty")
-    expect(page).to_not have_link("Checkout")
+    within "#item-#{item.id}" do
+      expect(page).to have_content(item.name)
+      expect(page).to have_content(item.description)
+      expect(page).to have_css("img[src*='#{item.image}']")
+      expect(page).to have_content(item_order.quantity)
+      expect(page).to have_content(item.price)
+      expect(page).to have_content(item_order.subtotal)
+    end
 
+    within ".shipping-address" do
+      expect(page).to have_content(@address_4.address)
+      expect(page).to have_content(@address_4.city)
+      expect(page).to have_content(@address_4.state)
+      expect(page).to have_content(@address_4.zip)
+      expect(page).to have_content(@regular_user.name)
+    end
   end
 end

@@ -76,36 +76,4 @@ describe "when regular user visits cart" do
 
     expect(current_path).to eq("/profile/orders/#{order.id}")
   end
-
-  it "when user visits order show page they see info about that order" do
-    visit cart_path
-    click_link "Checkout"
-    fill_in :name, with: @regular_user.name
-    fill_in :address, with: @regular_user.address
-    fill_in :city, with: @regular_user.city
-    fill_in :state, with: @regular_user.state
-    fill_in :zip, with: @regular_user.zip
-    click_button "Create Order"
-
-    order = Order.last
-    item = order.items.last
-    item_order = order.item_orders.last
-    click_link("Order ID: #{order.id}")
-    expect(current_path).to eq("/profile/orders/#{order.id}")
-    expect(page).to have_content("Date created: #{order.created_at.strftime("%d %b %y")}")
-    expect(page).to have_content("Last update: #{order.updated_at.strftime("%d %b %y")}")
-    expect(page).to have_content("Order status: #{order.status}")
-    expect(page).to have_content("Total items: #{order.total_quantity}")
-    expect(page).to have_content("Grand total: $#{order.grandtotal}")
-    expect(page).to have_link("Order ID: #{order.id}")
-
-    within "#item-#{item.id}" do
-      expect(page).to have_content(item.name)
-      expect(page).to have_content(item.description)
-      expect(page).to have_css("img[src*='#{item.image}']")
-      expect(page).to have_content(item_order.quantity)
-      expect(page).to have_content(item.price)
-      expect(page).to have_content(item_order.subtotal)
-    end
-  end
 end
