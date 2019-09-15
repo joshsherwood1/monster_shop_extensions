@@ -75,7 +75,6 @@ describe "As a mechant employee" do
     expect(page).to have_content("#{@pencil.price}")
     expect(page).to_not have_content("#{@tire.name}")
     expect(page).to_not have_css("img[src*='#{@tire.image}']")
-    expect(page).to_not have_content("#{@tire.price}")
     expect(page).to have_content("#{@itemorder.quantity}")
   end
 
