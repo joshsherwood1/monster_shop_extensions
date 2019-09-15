@@ -17,4 +17,8 @@ class User < ApplicationRecord
     orders.empty?
   end
 
+  def no_addresses?
+    addresses.empty?
+  end
+
 end

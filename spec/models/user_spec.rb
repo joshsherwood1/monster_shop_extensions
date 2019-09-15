@@ -41,5 +41,12 @@ describe User, type: :model do
                       role: 0)
     expect(user.no_orders?).to eq(true)
     end
+
+    it "can verify that a user has no addresses" do
+      @user = User.create(name: 'Christopher', email: 'christopher678@email.com', password: 'p@ssw0rd', role: 0)
+      expect(@user.no_addresses?).to eq(true)
+      @address_home = @user.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
+      expect(@user.no_addresses?).to eq(false)
+    end
   end
 end
