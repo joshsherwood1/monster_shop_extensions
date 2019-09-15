@@ -4,13 +4,11 @@ RSpec.describe "As a visitor" do
   describe "When I visit a merchant show page" do
     before :each do
       @user = User.create!(  name: "alec",
-        address: "234 Main",
-        city: "Denver",
-        state: "CO",
-        zip: 80204,
         email: "alec@gmail.com",
         password: "password"
       )
+      @address_1 = @user.addresses.create(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
+
     end
     it "I can delete a merchant" do
       bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203)
@@ -60,15 +58,13 @@ RSpec.describe "As a visitor" do
       visit "/items/#{pencil.id}"
       click_on "Add To Cart"
       visit "/cart"
-      click_on "Checkout"
 
-      fill_in :name, with: @user.name
-      fill_in :address, with: @user.address
-      fill_in :city, with: @user.city
-      fill_in :state, with: @user.state
-      fill_in :zip, with: @user.zip
+      visit cart_path
+      expect(page).to have_link("#{@address_1.address_type} Address: #{@address_1.address} #{@address_1.city}, #{@address_1.state} #{@address_1.zip}")
+      click_link("#{@address_1.address_type} Address: #{@address_1.address} #{@address_1.city}, #{@address_1.state} #{@address_1.zip}")
+      expect(current_path).to eq("/orders/new/address/#{@address_1.id}")
+      click_button("Create Order")
 
-      click_button "Create Order"
       visit "/merchants/#{meg.id}"
       expect(page).to_not have_link("Delete Merchant")
     end

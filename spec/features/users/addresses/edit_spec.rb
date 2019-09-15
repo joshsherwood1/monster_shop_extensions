@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Address Editing" do
   describe "As a registered user" do
     before :each do
-      @user = User.create(name: 'Christopher', email: 'christopher@email.com', password: 'p@ssw0rd', role: 0)
+      @user = User.create(name: 'Christopher', email: 'christopher2456@email.com', password: 'p@ssw0rd', role: 0)
       @address_home = @user.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
       visit '/login'
 

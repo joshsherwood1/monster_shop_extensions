@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "As an Admin User" do
   before :each do
-    @admin = User.create(name: 'Christopher', email: 'christopher@email.com', password: 'p@ssw0rd', role: 3)
+    @admin = User.create(name: 'Christopher', email: 'christopher2@email.com', password: 'p@ssw0rd', role: 3)
     @admin.addresses.create!(address: '123 Oak Ave', city: 'Denver', state: 'CO', zip: 80021)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
   end

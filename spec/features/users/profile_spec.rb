@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "User Profile" do
   describe "As a registered user" do
     before :each do
-      @user = User.create(name: 'Christopher', email: 'christopher@email.com', password: 'p@ssw0rd', role: 0)
+      @user = User.create(name: 'Christopher', email: 'christopher345354@email.com', password: 'p@ssw0rd', role: 0)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
       @user_2 = User.create(name: 'Christopher', email: 'ck@email.com', password: 'p@ssw0rd', role: 0)
       @address_home = @user.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
@@ -32,25 +32,13 @@ RSpec.describe "User Profile" do
       expect(current_path).to eq('/profile/edit')
 
       expect(find_field(:name).value).to eq(@user.name)
-      expect(find_field(:address).value).to eq(@user.address)
-      expect(find_field(:city).value).to eq(@user.city)
-      expect(find_field(:state).value).to eq(@user.state)
-      expect(find_field(:zip).value).to eq(@user.zip.to_s)
       expect(find_field(:email).value).to eq(@user.email)
 
       name = 'Christopher'
-      address = '456 1st St'
-      city = 'Northglenn'
-      state = 'CO'
-      zip = 80233
       email = 'christopher@email.com'
 
       fill_in "Name", with: name
       fill_in "Email", with: email
-      fill_in "Address", with: address
-      fill_in "City", with: city
-      fill_in "State", with: state
-      fill_in "Zip", with: zip
       click_button 'Update Profile'
 
       expect(current_path).to eq('/profile')

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Address Deleting" do
   describe "As a registered user" do
     before :each do
-      @user = User.create(name: 'Christopher', email: 'christopher@email.com', password: 'p@ssw0rd', role: 0)
+      @user = User.create(name: 'Christopher', email: 'christopher32234@email.com', password: 'p@ssw0rd', role: 0)
       @address_home = @user.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
       @address_2 = @user.addresses.create(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
       @dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)

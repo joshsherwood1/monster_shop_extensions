@@ -4,13 +4,12 @@ RSpec.describe 'merchant show page', type: :feature do
   describe 'As a user' do
     before :each do
       @user = User.create!(  name: "alec",
-        address: "234 Main",
-        city: "Denver",
-        state: "CO",
-        zip: 80204,
         email: "alec@gmail.com",
         password: "password"
       )
+      @address_1 = @user.addresses.create(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
+      @address_2 = @user.addresses.create(address: "234 Main", city: "Key Largo", state: "CO", zip: 80204)
+
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 
@@ -18,9 +17,9 @@ RSpec.describe 'merchant show page', type: :feature do
       @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 20, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
-      @order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
-      @order_2 = @user.orders.create!(name: 'Brian', address: '123 Zanti St', city: 'Denver', state: 'CO', zip: 80204)
-      @order_3 = @user.orders.create!(name: 'Mike', address: '123 Dao St', city: 'Denver', state: 'CO', zip: 80210)
+      @order_1 = @user.orders.create!(address_id: @address_1.id)
+      @order_2 = @user.orders.create!(address_id: @address_1.id)
+      @order_3 = @user.orders.create!(address_id: @address_2.id)
 
       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
       @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
@@ -38,7 +37,7 @@ RSpec.describe 'merchant show page', type: :feature do
         expect(page).to have_content("Average Price of Items: $15")
         within ".distinct-cities" do
           expect(page).to have_content("Cities that order these items:")
-          expect(page).to have_content("Hershey")
+          expect(page).to have_content("Key Largo")
           expect(page).to have_content("Denver")
         end
       end

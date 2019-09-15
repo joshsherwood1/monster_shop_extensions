@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe "As an Admin User" do
   before :each do
-    @admin = User.create(name: 'Christopher', email: 'christopher@email.com', password: 'p@ssw0rd', role: 3)
-    @address_2 = @admin.addresses.create(address: '123 Oak Ave', city: 'Denver', state: 'CO', zip: 80021)
+    @admin = User.create(name: 'Christopher', email: 'christopher678@email.com', password: 'p@ssw0rd', role: 3)
+    @address_2 = @admin.addresses.create!(address: '123 Oak Ave', city: 'Denver', state: 'CO', zip: 80021)
     @user_1 = User.create!(  name: "alec", email: "5@gmail.com", password: "password")
     @user_2 = User.create!(  name: "josh", email: "6@gmail.com", password: "password", role: 1)
     @user_3 = User.create!(  name: "josh", email: "7@gmail.com", password: "password", role: 1)

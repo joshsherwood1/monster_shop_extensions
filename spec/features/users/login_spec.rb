@@ -3,13 +3,11 @@ require 'rails_helper'
 describe "When visitor goes to login page" do
   it "regular users can login and are directed to correct page" do
     user = User.create(  name: "alec",
-      address: "234 Main",
-      city: "Denver",
-      state: "CO",
-      zip: 80204,
       email: "alec@gmail.com",
       password: "password"
     )
+    user.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
+
 
     visit '/login'
 
@@ -24,15 +22,13 @@ describe "When visitor goes to login page" do
   it "merchants can login and are directed to correct page" do
     bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 11234)
     user_1 = User.create(  name: "alec",
-      address: "234 Main",
-      city: "Denver",
-      state: "CO",
-      zip: 80204,
       email: "alec@gmail.com",
       password: "password",
       role: 1,
       merchant_id: bike_shop.id
     )
+    user_1.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
+
 
     visit '/login'
 
@@ -46,14 +42,12 @@ describe "When visitor goes to login page" do
 
   it "admins can login and are directed to correct page" do
     user_2 = User.create(  name: "alec",
-      address: "234 Main",
-      city: "Denver",
-      state: "CO",
-      zip: 80204,
       email: "alec@gmail.com",
       password: "password",
       role: 3
     )
+    user_2.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
+
 
     visit '/login'
 
@@ -67,10 +61,6 @@ describe "When visitor goes to login page" do
 
   it "users can not login with wrong information" do
     user_2 = User.create(  name: "alec",
-      address: "234 Main",
-      city: "Denver",
-      state: "CO",
-      zip: 80204,
       email: "alec@gmail.com",
       password: "password",
       role: 3
