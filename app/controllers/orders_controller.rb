@@ -1,6 +1,7 @@
 class OrdersController <ApplicationController
 
   def new
+    @address = Address.find(params[:address_id])
   end
 
   def show
@@ -15,6 +16,8 @@ class OrdersController <ApplicationController
   def create
     user = User.find(session[:user_id])
     order = user.orders.create(order_params)
+    address = Address.find(params[:address_id])
+    order.address_id = address.id
     if order.save
       cart.items.each do |item,quantity|
         order.item_orders.create({

@@ -45,8 +45,13 @@
 </table>
   <p>Total: <%= number_to_currency(cart.total) %></p>
   <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
-  <% if current_user %>
-    <p><%= link_to "Checkout", "/orders/new", method: :get %></p>
+  <% if current_user && current_user.no_addresses? %>
+    <p>Please <%= link_to "add an address", "/profile/addresses/new" %> to checkout</p>
+  <% elsif current_user && !current_user.no_addresses? %>
+  <p>To checkout, please choose an address below to ship these items to:</p>
+    <% current_user.addresses.each do |address| %>
+    <p><%= link_to "#{address.address_type} Address: #{address.address} #{address.city}, #{address.state} #{address.zip}", "/orders/new/address/#{address.id}", method: :get %></p>
+    <% end %>
   <% else %>
   <section id='visitor-checkout-message'>
     <h4>You must <%= link_to "log in", '/login' %> or <%= link_to "register", '/register' %> in order to checkout</h4>

@@ -1,19 +1,36 @@
 <section class="header">
 <br><%= @user.name %>
-<br><%= @user.address %>
-<br><%= @user.city %>
-<br><%= @user.state %>
-<br><%= @user.zip %>
 <br><%= @user.email %>
 </section>
   <section class="text">
   <br><% if !current_admin? %>
     <br><%= link_to 'Edit Profile', '/profile/edit' %>
     <br><br><%= link_to 'Edit Password', '/profile/password_edit' %>
+    <br><br><%= link_to 'Create a new address', '/profile/addresses/new' %>
   <% end %>
   <section class="my-orders-link">
     <% unless @user.no_orders? %>
       <br><%= link_to 'My Orders', '/profile/orders' %>
     <% end %>
   </section>
+  <h4>Addresses</h4>
+  <% @user.addresses.each do |address| %>
+  <section id="address-<%=address.id%>">
+    <p>Address Type: <%= address.address_type %></p>
+    <p>Address: <%= address.address %></p>
+    <p>City: <%= address.city %></p>
+    <p>State: <%= address.state %></p>
+    <p>Zip Code: <%= address.zip %></p>
+    <% if address.shipped_orders_with_address?(address.id) %>
+      <p>This address cannot be edited at this time since an order has been shipped to this address</p>
+    <% else %>
+      <%= link_to 'Edit this address', "/profile/addresses/#{address.id}/edit" %>
+   <% end %>
+    <% if address.shipped_orders_with_address?(address.id) %>
+      <p>This address cannot be deleted at this time since an order has been shipped to this address</p>
+    <% else %>
+      <%= link_to 'Delete this address', "/profile/addresses/#{address.id}", method: :delete %>
+   <% end %>
+  </section>
+  <% end %>
 </section>

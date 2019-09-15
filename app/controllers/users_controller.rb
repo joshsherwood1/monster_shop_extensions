@@ -4,16 +4,22 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @address = @user.addresses.new
   end
 
   def create
     @user = User.create(user_params)
+    #@new_address = Address.create(address_params)
     if @user.save
-      session[:user_id] = @user.id
-      flash[:success] = "Welcome, #{@user.name}! You are now registered and logged in."
-      redirect_to "/profile"
+      @address = @user.addresses.create(address_params)
+      if @address.save
+        session[:user_id] = @user.id
+        flash[:success] = "Welcome, #{@user.name}! You are now registered and logged in."
+        redirect_to "/profile"
+      end
     else
       flash[:error] = @user.errors.full_messages.uniq.to_sentence
+      #flash[:error] = @new_address.errors.full_messages.uniq.to_sentence
       render :new
     end
   end
@@ -54,7 +60,11 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, address_attributes: [:address, :city, :state, :zip, :address_type])
+  end
+
+  def address_params
+    params.require(:user).require(:address).permit(:address, :city, :state, :zip, :address_type)
   end
 
   def cur_user
