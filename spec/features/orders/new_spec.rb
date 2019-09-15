@@ -1,7 +1,13 @@
+require 'rails_helper'
+
 RSpec.describe("New Order Page") do
   describe "When I check out from my cart" do
     before(:each) do
-      @user = User.create(name: 'Christopher', address: '123 Oak Ave', city: 'Denver', state: 'CO', zip: 80021, email: 'christopher@email.com', password: 'p@ssw0rd', role: 0)
+      @user = User.create!(  name: "alec",
+        email: "alec@gmail.com",
+        password: "password"
+      )
+      @address_1 = @user.addresses.create(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -21,7 +27,8 @@ RSpec.describe("New Order Page") do
     it "I see all the information about my current cart" do
       visit "/cart"
 
-      click_on "Checkout"
+      click_link("#{@address_1.address_type} Address: #{@address_1.address} #{@address_1.city}, #{@address_1.state} #{@address_1.zip}")
+
 
       within "#order-item-#{@tire.id}" do
         expect(page).to have_link(@tire.name)
@@ -48,18 +55,6 @@ RSpec.describe("New Order Page") do
       end
 
       expect(page).to have_content("Total: $142")
-    end
-
-    it "I see a form where I can enter my shipping info" do
-      visit "/cart"
-      click_on "Checkout"
-
-      expect(page).to have_field(:name)
-      expect(page).to have_field(:address)
-      expect(page).to have_field(:city)
-      expect(page).to have_field(:state)
-      expect(page).to have_field(:zip)
-      expect(page).to have_button("Create Order")
     end
   end
 end

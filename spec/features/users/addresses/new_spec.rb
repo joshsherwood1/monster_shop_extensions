@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Address Creation" do
   describe "As a registered user" do
     before :each do
-      @user = User.create(name: 'Christopher', email: 'christopher@email.com', password: 'p@ssw0rd', role: 0)
+      @user = User.create(name: 'Christopher', email: 'christopher4534534@email.com', password: 'p@ssw0rd', role: 0)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
       @address_home = @user.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
     end

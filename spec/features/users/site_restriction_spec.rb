@@ -4,13 +4,11 @@ describe 'User Site Navigation' do
   describe "when user attempts to navigate to '/merchant' or '/admin'" do
     it 'they will encounter a 404 error webpage' do
       regular_user = User.create(  name: "alec",
-                          address: "234 Main",
-                          city: "Denver",
-                          state: "CO",
-                          zip: 80204,
                           email: "alec@gmail.com",
                           password: "password",
                           role: 0)
+      regular_user.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
+
       allow_any_instance_of(ApplicationController)
               .to receive(:current_user)
               .and_return(regular_user)
@@ -27,13 +25,11 @@ describe 'User Site Navigation' do
   describe "when user attempts to navigate to '/profile', '/cart', '/items', or '/merchants/'" do
     it 'they can do so' do
       regular_user = User.create(  name: "alec",
-                          address: "234 Main",
-                          city: "Denver",
-                          state: "CO",
-                          zip: 80204,
                           email: "alec@gmail.com",
                           password: "password",
                           role: 0)
+      regular_user.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
+
       allow_any_instance_of(ApplicationController)
               .to receive(:current_user)
               .and_return(regular_user)

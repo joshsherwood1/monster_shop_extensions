@@ -4,13 +4,10 @@ describe("Order Creation") do
   describe "When I check out from my cart" do
     before(:each) do
       @user = User.create!(  name: "alec",
-        address: "234 Main",
-        city: "Denver",
-        state: "CO",
-        zip: 80204,
         email: "alec@gmail.com",
         password: "password"
       )
+      @address_1 = @user.addresses.create(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
@@ -33,24 +30,14 @@ describe("Order Creation") do
       visit "/items/#{@pencil.id}"
       click_on "Add To Cart"
 
-      visit "/cart"
-      click_on "Checkout"
     end
 
     it 'I can create a new order' do
-      name = "Bert"
-      address = "123 Sesame St."
-      city = "NYC"
-      state = "New York"
-      zip = 10001
-
-      fill_in :name, with: name
-      fill_in :address, with: address
-      fill_in :city, with: city
-      fill_in :state, with: state
-      fill_in :zip, with: zip
-
-      click_button "Create Order"
+      visit cart_path
+      expect(page).to have_link("#{@address_1.address_type} Address: #{@address_1.address} #{@address_1.city}, #{@address_1.state} #{@address_1.zip}")
+      click_link("#{@address_1.address_type} Address: #{@address_1.address} #{@address_1.city}, #{@address_1.state} #{@address_1.zip}")
+      expect(current_path).to eq("/orders/new/address/#{@address_1.id}")
+      click_button("Create Order")
 
       new_order = Order.last
       expect(current_path).to eq("/profile/orders")
@@ -58,11 +45,11 @@ describe("Order Creation") do
       visit "/orders/#{new_order.id}"
 
       within '.shipping-address' do
-        expect(page).to have_content(name)
-        expect(page).to have_content(address)
-        expect(page).to have_content(city)
-        expect(page).to have_content(state)
-        expect(page).to have_content(zip)
+        expect(page).to have_content(@user.name)
+        expect(page).to have_content(@address_1.address)
+        expect(page).to have_content(@address_1.city)
+        expect(page).to have_content(@address_1.state)
+        expect(page).to have_content(@address_1.zip)
       end
 
       within "#item-#{@paper.id}" do
@@ -96,25 +83,6 @@ describe("Order Creation") do
       within "#datecreated" do
         expect(page).to have_content(new_order.created_at)
       end
-    end
-
-    it 'i cant create order if info not filled out' do
-      name = ""
-      address = "123 Sesame St."
-      city = "NYC"
-      state = "New York"
-      zip = 10001
-
-      fill_in :name, with: name
-      fill_in :address, with: address
-      fill_in :city, with: city
-      fill_in :state, with: state
-      fill_in :zip, with: zip
-
-      click_button "Create Order"
-
-      expect(page).to have_content("Please complete address form to create an order.")
-      expect(page).to have_button("Create Order")
     end
   end
 end

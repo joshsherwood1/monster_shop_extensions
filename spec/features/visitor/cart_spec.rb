@@ -21,8 +21,6 @@ describe 'Visitor Cart Checkout' do
 
       visit "/cart"
 
-      expect(page).to_not have_link("Checkout")
-
       within '#visitor-checkout-message' do
         expect(page).to have_content("You must log in or register in order to checkout")
         expect(page).to have_link("log in")

@@ -3,13 +3,10 @@ require 'rails_helper'
 describe "when regular user visits cart" do
   before :each do
     @regular_user = User.create!(  name: "alec",
-      address: "234 Main",
-      city: "Denver",
-      state: "CO",
-      zip: 80204,
       email: "5@gmail.com",
       password: "password"
     )
+    @address_1 = @regular_user.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
     @meg = Merchant.create!(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
     @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
     @tire = @meg.items.create!(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
@@ -35,12 +32,7 @@ describe "when regular user visits cart" do
     expect(page).to_not have_link("My Orders")
 
     visit cart_path
-    click_link "Checkout"
-    fill_in :name, with: @regular_user.name
-    fill_in :address, with: @regular_user.address
-    fill_in :city, with: @regular_user.city
-    fill_in :state, with: @regular_user.state
-    fill_in :zip, with: @regular_user.zip
+    click_link ("#{@address_1.address_type} Address: #{@address_1.address} #{@address_1.city}, #{@address_1.state} #{@address_1.zip}")
     click_button "Create Order"
 
     visit '/profile'
@@ -55,12 +47,7 @@ describe "when regular user visits cart" do
 
   it "user sees all order info on profile orders page" do
     visit cart_path
-    click_link "Checkout"
-    fill_in :name, with: @regular_user.name
-    fill_in :address, with: @regular_user.address
-    fill_in :city, with: @regular_user.city
-    fill_in :state, with: @regular_user.state
-    fill_in :zip, with: @regular_user.zip
+    click_link ("#{@address_1.address_type} Address: #{@address_1.address} #{@address_1.city}, #{@address_1.state} #{@address_1.zip}")
     click_button "Create Order"
 
     order = Order.last
