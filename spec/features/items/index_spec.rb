@@ -13,14 +13,8 @@ RSpec.describe "Items Index Page" do
       @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
       @pink_helmet = @meg.items.create(name: "Pink Helmet", description: "Very pink helmet!", price: 51, image: "https://images-na.ssl-images-amazon.com/images/I/716FdxJKkjL._SX425_.jpg", inventory: 12)
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
-      @regular_user =  User.create!(  name: "alec",
-                      address: "234 Main",
-                      city: "Denver",
-                      state: "CO",
-                      zip: 80204,
-                      email: "5@gmail.com",
-                      password: "password"
-                    )
+      @regular_user =  User.create!(  name: "alec", email: "5@gmail.com", password: "password")
+      @address_1 = @regular_user.addresses.create(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
     end
 
     it "all items or merchant names are links" do
@@ -35,13 +29,11 @@ RSpec.describe "Items Index Page" do
 
     it "As a regular user, I can see a list of all active items and I cannot see inactive items "do
       user = User.create(  name: "alec",
-        address: "234 Main",
-        city: "Denver",
-        state: "CO",
-        zip: 80204,
         email: "alec@gmail.com",
         password: "password"
       )
+
+      user.addresses.create(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
 
       visit '/login'
 
@@ -83,13 +75,12 @@ RSpec.describe "Items Index Page" do
 
     it "I can see a list of all active items and I cannot see inactive items "do
       user = User.create(  name: "alec",
-        address: "234 Main",
-        city: "Denver",
-        state: "CO",
-        zip: 80204,
-        email: "alec@gmail.com",
+        email: "alec456@gmail.com",
         password: "password"
       )
+
+      user.addresses.create(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
+
 
       visit '/login'
 
@@ -131,13 +122,12 @@ RSpec.describe "Items Index Page" do
 
     it "I can click on item image and it redirects me to an item show page"do
       user = User.create(  name: "alec",
-        address: "234 Main",
-        city: "Denver",
-        state: "CO",
-        zip: 80204,
-        email: "alec@gmail.com",
+        email: "alec890@gmail.com",
         password: "password"
       )
+
+      user.addresses.create(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
+
 
       visit '/login'
 
@@ -158,9 +148,10 @@ RSpec.describe "Items Index Page" do
     end
 
     it "I see quantity purchased statistics about the most and least popular active items "do
-      @order_1 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
-      @order_2 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
-      @order_3 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
+      @address_2 = @regular_user.addresses.create(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
+      @order_1 = @regular_user.orders.create(address_id: @address_2.id, status: 0)
+      @order_2 = @regular_user.orders.create(address_id: @address_2.id, status: 0)
+      @order_3 = @regular_user.orders.create(address_id: @address_2.id, status: 0)
       @itemorder = ItemOrder.create(order_id: @order_1.id, item_id: @tire.id, quantity: 2, price: 100)
       @itemorder_2 = ItemOrder.create(order_id: @order_1.id, item_id: @paper.id, quantity: 1, price: 20)
       @itemorder_3 = ItemOrder.create(order_id: @order_1.id, item_id: @pink_helmet.id, quantity: 3, price: 51)

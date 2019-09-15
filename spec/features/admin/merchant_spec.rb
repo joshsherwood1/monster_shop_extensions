@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "Admin user can see all merchants" do
   before :each do
-    @regular_user =  User.create!(  name: "alec", email: "5@gmail.com", password: "password")
+    @regular_user =  User.create!(  name: "alec", email: "45@gmail.com", password: "password")
     @address_1 = @regular_user.addresses.create(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
     @dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210, enabled?: true)
     @bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203, enabled?: false)
@@ -19,7 +19,7 @@ describe "Admin user can see all merchants" do
     ItemOrder.create(order_id: @order_2.id, item_id: @tire.id, quantity: 1, price: 100)
     ItemOrder.create(order_id: @order_2.id, item_id: @pencil.id, quantity: 4, price: 2)
 
-    @admin = User.create(name: 'Christopher', email: 'christopher@email.com', password: 'p@ssw0rd', role: 3)
+    @admin = User.create(name: 'Christopher', email: 'christopher6554@email.com', password: 'p@ssw0rd', role: 3)
     @address_2 = @admin.addresses.create(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
     visit '/login'
 

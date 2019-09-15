@@ -24,11 +24,10 @@ RSpec.describe 'Cart show' do
     it 'Theres a link to checkout' do
       visit "/cart"
 
-      expect(page).to have_link("Checkout")
 
-      click_on "Checkout"
+      click_link ("#{@address_1.address_type} Address: #{@address_1.address} #{@address_1.city}, #{@address_1.state} #{@address_1.zip}")
 
-      expect(current_path).to eq("/orders/new")
+      expect(current_path).to eq("/orders/new/address/#{@address_1.id}")
     end
   end
 
