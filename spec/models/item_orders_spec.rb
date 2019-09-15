@@ -16,39 +16,28 @@ describe ItemOrder, type: :model do
 
   describe 'instance methods' do
     it 'subtotal' do
-      @user = User.create!(  name: "alec",
-        address: "234 Main",
-        city: "Denver",
-        state: "CO",
-        zip: 80204,
-        email: "5@gmail.com",
-        password: "password"
-      )
-      meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
-      tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-      order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
-      item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2)
 
-      expect(item_order_1.subtotal).to eq(200)
+      @user = User.create!(name: 'Christopher', email: 'christopher123@email.com', password: 'p@ssw0rd', role: 0)
+      address_home = @user.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
+      @meg = Merchant.create(name: "Meg's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+      tire = @meg.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+      order_1 = @user.orders.create!(address_id: address_home.id, status: 2)
+      item_order_1 = order_1.item_orders.create!(item_id: tire.id, price: tire.price, quantity: 2, merchant_id: @meg.id)
+
+      expect(item_order_1.subtotal).to eq(42.0)
     end
 
     it 'fulfill_and_save_item_order' do
-      @user = User.create!(  name: "alec",
-        address: "234 Main",
-        city: "Denver",
-        state: "CO",
-        zip: 80204,
-        email: "678@gmail.com",
-        password: "password"
-      )
-      meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
-      tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-      order_1 = @user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
-      item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2, status: 0)
+      @user = User.create!(name: 'Christopher', email: 'christopher123@email.com', password: 'p@ssw0rd', role: 0)
+      address_home = @user.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
+      @meg = Merchant.create!(name: "Meg's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+      tire = @meg.items.create!(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+      order_1 = @user.orders.create!(address_id: address_home.id, status: 2)
+      item_order_2 = order_1.item_orders.create!(item_id: tire.id, price: tire.price, quantity: 2, merchant_id: @meg.id)
 
-      expect(item_order_1.status).to eq("unfulfilled")
-      item_order_1.fulfill_and_save_item_order
-      expect(item_order_1.status).to eq("fulfilled")
+      expect(item_order_2.status).to eq("unfulfilled")
+      item_order_2.fulfill_and_save_item_order
+      expect(item_order_2.status).to eq("fulfilled")
     end
   end
 

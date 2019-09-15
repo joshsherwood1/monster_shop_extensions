@@ -20,13 +20,11 @@ describe Item, type: :model do
   describe "instance methods" do
     before(:each) do
       @user = User.create!(  name: "alec",
-        address: "234 Main",
-        city: "Denver",
-        state: "CO",
-        zip: 80204,
         email: "alec@gmail.com",
         password: "password"
       )
+      @address_home = @user.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
+
       @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @chain = @bike_shop.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
 
@@ -51,19 +49,19 @@ describe Item, type: :model do
 
     it 'no orders' do
       expect(@chain.no_orders?).to eq(true)
-      order = @user.orders.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
-      order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
+      order = @user.orders.create(address_id: @address_home.id)
+      order.item_orders.create(item: @chain, price: @chain.price, quantity: 2, merchant_id: @bike_shop.id)
       expect(@chain.no_orders?).to eq(false)
     end
 
     it "adds order quantity to item inventory" do
-      @itemorder = ItemOrder.create(item_id: @chain.id, quantity: 2, price: 100)
+      @itemorder = ItemOrder.create(item_id: @chain.id, quantity: 2, price: 100, merchant_id: @bike_shop.id)
       @chain.add(@itemorder.quantity)
       expect(@chain.inventory).to eq(7)
     end
 
     it "subtract order quantity from item inventory" do
-      @itemorder = ItemOrder.create(item_id: @chain.id, quantity: 2, price: 100)
+      @itemorder = ItemOrder.create(item_id: @chain.id, quantity: 2, price: 100, merchant_id: @bike_shop.id)
       @chain.subtract(@itemorder.quantity)
       expect(@chain.inventory).to eq(3)
     end
@@ -90,23 +88,21 @@ describe Item, type: :model do
       @pink_helmet = @meg.items.create(name: "Pink Helmet", description: "Very pink helmet!", price: 51, image: "https://images-na.ssl-images-amazon.com/images/I/716FdxJKkjL._SX425_.jpg", inventory: 12)
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
       @regular_user =  User.create!(  name: "alec",
-                      address: "234 Main",
-                      city: "Denver",
-                      state: "CO",
-                      zip: 80204,
                       email: "5@gmail.com",
                       password: "password"
                     )
-      @order_1 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
-      @order_2 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
-      @order_3 = @regular_user.orders.create(name: "Sam Jackson", address: "234 Main St", city: "Seattle", state: "Washington", zip: 99987, status: 0)
-      @itemorder = ItemOrder.create(order_id: @order_1.id, item_id: @tire.id, quantity: 2, price: 100)
-      @itemorder_2 = ItemOrder.create(order_id: @order_1.id, item_id: @paper.id, quantity: 1, price: 20)
-      @itemorder_3 = ItemOrder.create(order_id: @order_1.id, item_id: @pink_helmet.id, quantity: 3, price: 51)
-      @itemorder_4 = ItemOrder.create(order_id: @order_2.id, item_id: @pull_toy.id, quantity: 4, price: 10)
-      @itemorder_5 = ItemOrder.create(order_id: @order_2.id, item_id: @helmet.id, quantity: 3, price: 50)
-      @itemorder_6 = ItemOrder.create(order_id: @order_3.id, item_id: @pencil.id, quantity: 72, price: 2)
-      @itemorder_7 = ItemOrder.create(order_id: @order_3.id, item_id: @pink_helmet.id, quantity: 5, price: 51)
+      @address_home_2 = @regular_user.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
+
+      @order_1 = @regular_user.orders.create(address_id: @address_home_2.id)
+      @order_2 = @regular_user.orders.create(address_id: @address_home_2.id)
+      @order_3 = @regular_user.orders.create(address_id: @address_home_2.id)
+      @itemorder = ItemOrder.create(order_id: @order_1.id, item_id: @tire.id, quantity: 2, price: 100, merchant_id: @meg.id)
+      @itemorder_2 = ItemOrder.create(order_id: @order_1.id, item_id: @paper.id, quantity: 1, price: 20, merchant_id: @bike_shop.id)
+      @itemorder_3 = ItemOrder.create(order_id: @order_1.id, item_id: @pink_helmet.id, quantity: 3, price: 51, merchant_id: @meg.id)
+      @itemorder_4 = ItemOrder.create(order_id: @order_2.id, item_id: @pull_toy.id, quantity: 4, price: 10, merchant_id: @bike_shop.id)
+      @itemorder_5 = ItemOrder.create(order_id: @order_2.id, item_id: @helmet.id, quantity: 3, price: 50, merchant_id: @meg.id)
+      @itemorder_6 = ItemOrder.create(order_id: @order_3.id, item_id: @pencil.id, quantity: 72, price: 2, merchant_id: @bike_shop.id)
+      @itemorder_7 = ItemOrder.create(order_id: @order_3.id, item_id: @pink_helmet.id, quantity: 5, price: 51, merchant_id: @meg.id)
     end
 
     it "sorts top 5 items based on most quantity ordered" do
