@@ -21,6 +21,12 @@
     <p>City: <%= address.city %></p>
     <p>State: <%= address.state %></p>
     <p>Zip Code: <%= address.zip %></p>
+    <%= link_to 'Edit this address', "/profile/addresses/#{address.id}/edit" %>
+    <% if address.shipped_orders_with_address?(address.id) %>
+      <p>This address cannot be deleted at this time since an order has been shipped to this address</p>
+    <% else %>
+      <%= link_to 'Delete this address', "/profile/addresses/#{address.id}", method: :delete %>
+   <% end %>
   </section>
   <% end %>
 </section>

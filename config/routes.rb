@@ -48,6 +48,9 @@ Rails.application.routes.draw do
 
   get "/profile/addresses/new", to: "addresses#new"
   post "/profile/addresses", to: "addresses#create"
+  get "/profile/addresses/:address_id/edit", to: "addresses#edit"
+  patch "/profile/addresses/:address_id", to: "addresses#update"
+  delete "/profile/addresses/:address_id", to: "addresses#destroy"
 
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
