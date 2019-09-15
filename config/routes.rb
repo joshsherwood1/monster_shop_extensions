@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
   get "/orders/new/address/:address_id", to: "orders#new"
   post "/orders/address/:address_id", to: "orders#create"
+  patch "/orders/:order_id/update/address/:address_id", to: "orders#update"
   get "/orders/:order_id", to: "orders#show"
   patch "/orders/:order_id", to: "orders#cancel"
   get "/profile/orders/:order_id", to: "orders#show"
