@@ -24,7 +24,9 @@ class Merchant <ApplicationRecord
   end
 
   def distinct_cities
-    item_orders.distinct.joins(:order).pluck(:city)
+    address_ids = item_orders.distinct.joins(:order).pluck(:address_id)
+    addresses = Address.where(id: address_ids)
+    addresses.map {|address| address.city}
   end
 
   def get_individual_orders

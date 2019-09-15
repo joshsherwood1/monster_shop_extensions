@@ -36,6 +36,14 @@ class OrdersController <ApplicationController
     end
   end
 
+  def update
+    order = Order.find(params[:order_id])
+    address = Address.find(params[:address_id])
+    order.address = address
+    order.save
+    redirect_to "/orders/#{order.id}"
+  end
+
 
   def cancel
     order = Order.find(params[:order_id])

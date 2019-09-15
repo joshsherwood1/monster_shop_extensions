@@ -16,6 +16,11 @@
       <td><p><%= @order.address.zip %> </p></td>
     </tr>
   </table>
+  <% if (!current_user.no_addresses?) && (@order.status == "pending")%>
+    <% current_user.addresses_except_order_address(@order.address.id).each do |address| %>
+      <p>Change address to <%= link_to "#{address.address_type} Address: #{address.address} #{address.city}, #{address.state} #{address.zip}", "/orders/#{@order.id}/update/address/#{address.id}", method: :patch %></p>
+    <% end %>
+  <% end %>
 </section>
 
   <section id="order-info-<%=@order.id%>">

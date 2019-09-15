@@ -16,12 +16,12 @@ describe "When regular user creates an order" do
     click_on "Add To Cart"
     visit "/items/#{@pencil.id}"
     click_on "Add To Cart"
+  end
+  it "they can see shipping information and order information" do
     visit '/login'
     fill_in :email, with: @regular_user.email
     fill_in :password, with: @regular_user.password
     click_button "Log In"
-  end
-  it "they can see shipping information and order information" do
 
     visit cart_path
     expect(page).to have_link("#{@address_3.address_type} Address: #{@address_3.address} #{@address_3.city}, #{@address_3.state} #{@address_3.zip}")
@@ -63,6 +63,71 @@ describe "When regular user creates an order" do
       expect(page).to have_content(@address_4.state)
       expect(page).to have_content(@address_4.zip)
       expect(page).to have_content(@regular_user.name)
+    end
+  end
+
+  it "they can changing the shipping address of a pending order" do
+    @regular_user_2 = User.create!(  name: "alec", email: "5655@gmail.com", password: "password")
+    @address_6 = @regular_user_2.addresses.create!(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
+    @address_7 = @regular_user_2.addresses.create!(address: "987 Evergreen Dr", city: "Seattle", state: "WA", zip: 74132, address_type: "Work")
+    @order_1 = @regular_user_2.orders.create!(address_id: @address_6.id)
+    ItemOrder.create!(merchant_id: @meg.id, item_id: @tire.id, price: 100, quantity: 1, order_id: @order_1.id)
+
+    visit '/login'
+    fill_in :email, with: @regular_user_2.email
+    fill_in :password, with: @regular_user_2.password
+    click_button "Log In"
+
+    visit "orders/#{@order_1.id}"
+    within ".shipping-address" do
+      expect(page).to have_content(@address_6.address)
+      expect(page).to have_content(@address_6.city)
+      expect(page).to have_content(@address_6.state)
+      expect(page).to have_content(@address_6.zip)
+      expect(page).to have_content(@regular_user.name)
+    end
+
+    within ".shipping-address" do
+      expect(page).to have_content("Change address to #{@address_7.address_type} Address: #{@address_7.address} #{@address_7.city}, #{@address_7.state} #{@address_7.zip}")
+      expect(page).to have_link("#{@address_7.address_type} Address: #{@address_7.address} #{@address_7.city}, #{@address_7.state} #{@address_7.zip}")
+      click_link("#{@address_7.address_type} Address: #{@address_7.address} #{@address_7.city}, #{@address_7.state} #{@address_7.zip}")
+    end
+    expect(current_path).to eq("/orders/#{@order_1.id}")
+
+    within ".shipping-address" do
+      expect(page).to have_content(@address_7.address)
+      expect(page).to have_content(@address_7.city)
+      expect(page).to have_content(@address_7.state)
+      expect(page).to have_content(@address_7.zip)
+      expect(page).to have_content(@regular_user.name)
+      expect(page).to have_content("Change address to #{@address_6.address_type} Address: #{@address_6.address} #{@address_6.city}, #{@address_6.state} #{@address_6.zip}")
+    end
+  end
+
+  it "they cannot changing the shipping address of an order that is not pending" do
+    @regular_user_3 = User.create!(  name: "alec", email: "5655@gmail.com", password: "password")
+    @address_7 = @regular_user_3.addresses.create!(address: "234 Main", city: "Denver", state: "CO", zip: 80204)
+    @address_8 = @regular_user_3.addresses.create!(address: "987 Evergreen Dr", city: "Seattle", state: "WA", zip: 74132, address_type: "Work")
+    @order_2 = @regular_user_3.orders.create!(address_id: @address_7.id, status: 1)
+    ItemOrder.create!(merchant_id: @meg.id, item_id: @tire.id, price: 100, quantity: 1, order_id: @order_2.id)
+
+    visit '/login'
+    fill_in :email, with: @regular_user_3.email
+    fill_in :password, with: @regular_user_3.password
+    click_button "Log In"
+
+    visit "orders/#{@order_2.id}"
+    within ".shipping-address" do
+      expect(page).to have_content(@address_7.address)
+      expect(page).to have_content(@address_7.city)
+      expect(page).to have_content(@address_7.state)
+      expect(page).to have_content(@address_7.zip)
+      expect(page).to have_content(@regular_user.name)
+    end
+
+    within ".shipping-address" do
+      expect(page).to_not have_content("Change address to #{@address_8.address_type} Address: #{@address_8.address} #{@address_8.city}, #{@address_8.state} #{@address_8.zip}")
+      expect(page).to_not have_link("#{@address_8.address_type} Address: #{@address_8.address} #{@address_8.city}, #{@address_8.state} #{@address_8.zip}")
     end
   end
 end
