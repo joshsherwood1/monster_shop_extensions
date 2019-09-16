@@ -11,7 +11,10 @@ class UsersController < ApplicationController
     @address = Address.create(address_params)
     if @user.save
       @user.addresses << @address
-      if @address.save
+      if !@address.save
+        flash[:error] = @address.errors.full_messages.uniq.to_sentence
+        render :new_2
+      else @address.save
         session[:user_id] = @user.id
         flash[:success] = "Welcome, #{@user.name}! You are now registered and logged in."
         redirect_to "/profile"
@@ -40,12 +43,18 @@ class UsersController < ApplicationController
 
   def update
     @user.update(user_params_edit)
-    if user_params_edit.include?(:password) && @user.save
+    if (user_params_edit[:password] == "") || (user_params_edit[:password_confirmation] == "")
+      redirect_to '/profile/password_edit'
+      flash[:error] = "Password cannot be blank"
+    elsif user_params_edit.include?(:password) && @user.save
       redirect_to '/profile'
       flash[:success] = 'Your password has been updated'
     elsif @user.save
       redirect_to '/profile'
       flash[:success] = 'Your profile has been updated'
+    elsif user_params_edit[:password] != user_params_edit[:password_confirmation]
+      redirect_to '/profile/password_edit'
+      flash[:error] = @user.errors.full_messages.uniq.to_sentence
     else
       redirect_to '/profile/edit'
       flash[:error] = @user.errors.full_messages.uniq.to_sentence
