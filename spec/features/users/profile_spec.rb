@@ -26,7 +26,7 @@ RSpec.describe "User Profile" do
       end
     end
 
-    xit 'I click the Edit Profile link. I see a prepopulate form with my current info. I submit the form and am returned to my profile page with my new info.' do
+    it 'I click the Edit Profile link. I see a prepopulate form with my current info. I submit the form and am returned to my profile page with my new info.' do
       visit '/profile'
       click_link 'Edit Profile'
       expect(current_path).to eq('/profile/edit')
@@ -34,8 +34,8 @@ RSpec.describe "User Profile" do
       expect(find_field(:name).value).to eq(@user.name)
       expect(find_field(:email).value).to eq(@user.email)
 
-      name = 'Christopher'
-      email = 'christopher@email.com'
+      name = 'Christopher H'
+      email = 'christopher123456789@email.com'
 
       fill_in "Name", with: name
       fill_in "Email", with: email
@@ -45,14 +45,10 @@ RSpec.describe "User Profile" do
 
       expect(page).to have_content('Your profile has been updated')
       expect(page).to have_content(name)
-      expect(page).to have_content(address)
-      expect(page).to have_content(city)
-      expect(page).to have_content(state)
-      expect(page).to have_content(zip)
       expect(page).to have_content(email)
     end
 
-    xit 'I see a link to edit my password. I fill out the form and am returned to my profile. I see a flash message confirming the update.' do
+    it 'I see a link to edit my password. I fill out the form and am returned to my profile. I see a flash message confirming the update.' do
       visit '/profile'
       click_link 'Edit Password'
 
@@ -70,7 +66,25 @@ RSpec.describe "User Profile" do
       expect(page).to have_content('Your password has been updated')
     end
 
-    xit 'I must use a unique email address when updating my profile' do
+    it 'I have to give the same password in the password and password confirmation fields' do
+      visit '/profile'
+      click_link 'Edit Password'
+
+      expect(current_path).to eq('/profile/password_edit')
+
+      password = 'password'
+      password_confirmation = 'password123456789'
+
+      fill_in :password, with: password
+      fill_in :password_confirmation, with: password_confirmation
+
+      click_button 'Submit'
+
+      expect(current_path).to eq('/profile/edit')
+      expect(page).to have_content("Password confirmation doesn't match Password")
+    end
+
+    it 'I must use a unique email address when updating my profile' do
       visit '/profile/edit'
 
       email = 'ck@email.com'
