@@ -69,6 +69,33 @@ describe 'User Registration' do
       expect(current_path).to eq("/users")
     end
 
+    it 'they have to fill out entire form and an address' do
+
+      visit '/register'
+      name = "alec"
+      city = "Denver"
+      state = "CO"
+      zip = 80204
+      email = "alec@gmail.com"
+      password = "password"
+      password_confirmation = "password"
+
+      fill_in "Name", with: name
+      fill_in "City", with: city
+      fill_in "State", with: state
+      fill_in "Zip", with: zip
+      fill_in "Email", with: email
+      fill_in "Password", with: password
+      fill_in "Password Confirmation", with: password_confirmation
+
+      click_button "Submit"
+
+      expect(page).to have_content("Address can't be blank")
+
+      expect(current_path).to eq("/users")
+    end
+
+
     it 'they have to use unique email address' do
 
       user_1 = User.create(  name: "alec",
