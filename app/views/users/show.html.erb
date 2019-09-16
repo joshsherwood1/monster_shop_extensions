@@ -1,5 +1,6 @@
 <section class="header">
 <br><%= @user.name %>
+<br>
 <br><%= @user.email %>
 </section>
   <section class="text">
@@ -13,9 +14,9 @@
       <br><%= link_to 'My Orders', '/profile/orders' %>
     <% end %>
   </section>
-  <h4>Addresses</h4>
+  <h3 class="header">Addresses</h3>
   <% @user.addresses.each do |address| %>
-  <section id="address-<%=address.id%>">
+  <section id="address-<%=address.id%>" class="text">
     <p>Address Type: <%= address.address_type %></p>
     <p>Address: <%= address.address %></p>
     <p>City: <%= address.city %></p>
@@ -31,6 +32,7 @@
     <% else %>
       <%= link_to 'Delete this address', "/profile/addresses/#{address.id}", method: :delete %>
    <% end %>
+   <br>
   </section>
   <% end %>
 </section>
