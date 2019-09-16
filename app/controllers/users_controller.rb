@@ -4,23 +4,22 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    @address = @user.addresses.new
   end
 
   def create
     @user = User.create(user_params)
-    #@new_address = Address.create(address_params)
+    @address = Address.create(address_params)
     if @user.save
-      @address = @user.addresses.create(address_params)
+      @user.addresses << @address
       if @address.save
         session[:user_id] = @user.id
         flash[:success] = "Welcome, #{@user.name}! You are now registered and logged in."
         redirect_to "/profile"
       end
     else
-      flash[:error] = @user.errors.full_messages.uniq.to_sentence
-      #flash[:error] = @new_address.errors.full_messages.uniq.to_sentence
-      render :new
+      flash[:error] = @address.errors.full_messages.uniq.to_sentence
+      flash[:success] = @user.errors.full_messages.uniq.to_sentence
+      render :new_2
     end
   end
 
@@ -40,8 +39,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update(user_params)
-    if user_params.include?(:password)
+    @user.update(user_params_edit)
+    if user_params_edit.include?(:password) && @user.save
       redirect_to '/profile'
       flash[:success] = 'Your password has been updated'
     elsif @user.save
@@ -49,7 +48,7 @@ class UsersController < ApplicationController
       flash[:success] = 'Your profile has been updated'
     else
       redirect_to '/profile/edit'
-      flash[:error] = @user.errors.full_messages.uniq
+      flash[:error] = @user.errors.full_messages.uniq.to_sentence
     end
   end
 
@@ -57,6 +56,10 @@ class UsersController < ApplicationController
 
   def require_user
     render file: "/public/404" unless current_user
+  end
+
+  def user_params_edit
+    params.permit(:name, :email, :password, :password_confirmation)
   end
 
   def user_params

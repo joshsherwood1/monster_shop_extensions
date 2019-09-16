@@ -15,12 +15,12 @@
 
 
 <%= form_for @user do |f| %>
-  <%= f.text_field :name, placeholder: "Name"%>
+  <%= f.text_field :name, value: @user.name, placeholder: "Name"%>
   <%= f.fields_for :address do |a| %>
-    <%= a.text_field :address, placeholder: "Address" %>
-    <%= a.text_field :city, placeholder: "City" %>
-    <%= a.text_field :state, placeholder: "State" %>
-    <%= a.text_field :zip, placeholder: "Zip" %>
+    <%= a.text_field :address, value: @address.address, placeholder: "Address" %>
+    <%= a.text_field :city, value: @address.city, placeholder: "City" %>
+    <%= a.text_field :state, value: @address.state, placeholder: "State" %>
+    <%= a.text_field :zip, value: @address.zip, placeholder: "Zip" %>
   <% end %>
   <%= f.text_field :email, value: nil, placeholder: "Email"%>
   <%= f.password_field :password, value: nil, placeholder: "Password"%>
