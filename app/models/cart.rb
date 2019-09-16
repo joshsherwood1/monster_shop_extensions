@@ -51,4 +51,15 @@ class Cart
   def quantity_zero?(item_id)
     @contents[item_id] == 0
   end
+
+  def create_item_orders(order)
+    self.items.each do |item,quantity|
+      order.item_orders.create({
+        item: item,
+        quantity: quantity,
+        price: item.price,
+        merchant_id: item.merchant_id
+        })
+    end
+  end
 end
