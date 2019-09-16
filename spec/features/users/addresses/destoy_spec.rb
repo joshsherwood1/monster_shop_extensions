@@ -38,11 +38,12 @@ RSpec.describe "Address Deleting" do
       expect(page).to_not have_content("Zip Code: #{@address_home.zip}")
     end
 
-    it "I can't delete an addressed that has had an order shipped to it" do
+    it "I can't delete or edit an addressed that has had an order shipped to it" do
       visit "profile"
       within "#address-#{@address_2.id}" do
         expect(page).to_not have_link("Delete this address")
-        expect(page).to have_content("This address cannot be deleted at this time since an order has been shipped to this address")
+        expect(page).to have_content("This address cannot be edited at this time since it is used in an order")
+        expect(page).to have_content("This address cannot be deleted at this time since it is used in an order")
       end
     end
   end
