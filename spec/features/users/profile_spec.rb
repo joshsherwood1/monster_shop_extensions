@@ -80,7 +80,7 @@ RSpec.describe "User Profile" do
 
       click_button 'Submit'
 
-      expect(current_path).to eq('/profile/edit')
+      expect(current_path).to eq('/profile/password_edit')
       expect(page).to have_content("Password confirmation doesn't match Password")
     end
 

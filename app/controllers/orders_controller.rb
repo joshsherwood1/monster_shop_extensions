@@ -19,14 +19,7 @@ class OrdersController <ApplicationController
     address = Address.find(params[:address_id])
     order.address_id = address.id
     if order.save
-      cart.items.each do |item,quantity|
-        order.item_orders.create({
-          item: item,
-          quantity: quantity,
-          price: item.price,
-          merchant_id: item.merchant_id
-          })
-      end
+      cart.create_item_orders(order)
       session.delete(:cart)
       flash[:success] = "Order Created!"
       redirect_to "/profile/orders"
@@ -47,12 +40,7 @@ class OrdersController <ApplicationController
 
   def cancel
     order = Order.find(params[:order_id])
-      order.item_orders.each do |item_order|
-        item_order[:status] = "unfulfilled"
-        item = Item.find(item_order.item_id)
-        item.add(item_order.quantity)
-      end
-    order.update(status: 3)
+      order.cancel_order
     redirect_to "/profile"
     flash[:success] = ("Order #{order.id} has been cancelled")
   end

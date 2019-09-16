@@ -1,20 +1,5 @@
 
-<!-- < % # change to form_for %> -->
-
-<!-- < %= form_tag '/users', method: :post do %>
-  < %= text_field_tag :name, nil, placeholder: "Name"%>
-  < %= text_field_tag :address, @user.address, placeholder: "Address"%>
-  < %= text_field_tag :city, @user.city, placeholder: "City"%>
-  < %= text_field_tag :state, @user.state, placeholder: "State"%>
-  < %= text_field_tag :zip, @user.zip, placeholder: "Zip"%>
-  < %= text_field_tag :email, nil, placeholder: "Email"%>
-  < %= password_field_tag :password, nil, placeholder: "Password"%>
-  < %= password_field_tag :password_confirmation, nil, placeholder: "Confirm Password"%>
-  < %= submit_tag "Submit" %>
-< %end %> -->
-
-
-<%= form_for @user do |f| %>
+<%= form_for @user, url: users_path do |f| %>
   <%= f.text_field :name, value: @user.name, placeholder: "Name"%>
   <%= f.fields_for :address do |a| %>
     <%= a.text_field :address, value: @address.address, placeholder: "Address" %>

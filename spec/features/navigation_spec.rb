@@ -34,9 +34,9 @@ RSpec.describe 'Site Navigation' do
 
       visit '/cart'
 
-      within "#home-pic" do
-        expect(page).to have_css('img[src*="https://www.davidbrassrarebooks.com/pictures/03815_8.jpg?v=1478033010"]')
-        click_link
+      within "#home-link" do
+        expect(page).to have_link('Home')
+        click_link('Home')
         expect(current_path).to eq("/")
       end
 

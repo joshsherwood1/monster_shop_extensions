@@ -38,4 +38,12 @@ class Order <ApplicationRecord
       self.item_orders.select("item_orders.*").where("merchant_id = #{id}")
   end
 
+  def cancel_order
+    self.item_orders.each do |item_order|
+      item_order[:status] = "unfulfilled"
+      item = Item.find(item_order.item_id)
+      item.add(item_order.quantity)
+    end
+    self.update(status: 3)
+  end
 end

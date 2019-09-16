@@ -9,6 +9,6 @@ class Address < ApplicationRecord
   validates :address_type, presence: true
 
   def shipped_orders_with_address?(id)
-    self.user.orders.where(address_id: id).where(status: 2).any?
+    self.user.orders.where(address_id: id).any?
   end
 end

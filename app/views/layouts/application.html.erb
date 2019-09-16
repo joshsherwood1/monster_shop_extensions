@@ -28,18 +28,13 @@
           <% end %>
         <% else %>
         <%= link_to 'Login', '/login' %>
+          <%= link_to 'Register', '/register' %>
         </section>
         <section>
-          <%= link_to 'Register', '/register' %>
         <% end %>
       </section>
-      <section id="home-pic">
-        <%= link_to "/" do %>
-          <section class="home-link">
-            <p>I wanna go home</p>
-            <img src="https://www.davidbrassrarebooks.com/pictures/03815_8.jpg?v=1478033010", id: "home-img">
-          </section>
-        <% end %>
+      <section id = "home-link">
+        <%= link_to "Home", "/"%>
       </section>
     </nav>
     <% flash.each do |name, msg| %>
