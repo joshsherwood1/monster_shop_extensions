@@ -64,6 +64,7 @@ Rails.application.routes.draw do
     get '/orders/:order_id', to: "orders#show"
     resources :items
     patch '/itemorders/:id/fulfill', to: "itemorders#fulfill"
+    resources :coupons, only: [:index]
   end
 
   namespace :user do
