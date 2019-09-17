@@ -32,7 +32,21 @@ describe Order, type: :model do
     end
 
     it "can sort orders" do
-      expect(Order.sort_orders.pluck(:id)).to eq([98, 96, 97])
+      dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+      pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+      dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+      user_1 = User.create!(  name: "alec", email: "5@gmail.com", password: "password")
+      user_2 = User.create!(  name: "josh", email: "6@gmail.com", password: "password")
+      @address_2 = user_1.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
+      @address_3 = user_2.addresses.create!(address: "1600 Pennsylvania Ave NW", city: "Washington", state: "DC", zip: 20500)
+      order_2 = user_2.orders.create!(address_id: @address_3.id, status: 0)
+      order_5 = user_2.orders.create!(address_id: @address_3.id, status: 3)
+      order_3 = user_2.orders.create!(address_id: @address_3.id, status: 1)
+      order_1 = user_1.orders.create!(address_id: @address_2.id, status: 2)
+      order_4 = user_1.orders.create!(address_id: @address_2.id, status: 0)
+
+      expect(Order.all).to eq([order_2, order_5, order_3, order_1, order_4 ])
+      expect(Order.sort_orders).to eq([order_2, order_4, order_3, order_1, order_5 ])
     end
 
     it 'packaged' do

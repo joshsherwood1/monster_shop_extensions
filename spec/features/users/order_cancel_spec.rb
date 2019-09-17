@@ -34,7 +34,7 @@ describe "when regular user visits cart" do
     visit cart_path
     click_link ("#{@address_1.address_type} Address: #{@address_1.address} #{@address_1.city}, #{@address_1.state} #{@address_1.zip}")
 
-
+    click_on("Create Order")
     order_1 = Order.last
     item_1 = order_1.items.last
     item_order_1 = order_1.item_orders.last

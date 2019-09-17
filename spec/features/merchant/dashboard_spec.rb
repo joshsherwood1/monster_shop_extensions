@@ -95,4 +95,11 @@ describe "As a mechant employee" do
       expect(page).to have_content("Grand Total of #{@bike_shop.name} items in this order: $8.00")
     end
   end
+
+  it "the merchant dashboard shows a link to a page where a merchant can handle their coupons" do
+    visit '/merchant'
+    expect(page).to have_link("Coupon Management Center")
+    click_link("Coupon Management Center")
+    expect(current_path).to eq("/merchant/coupons")
+  end
 end
