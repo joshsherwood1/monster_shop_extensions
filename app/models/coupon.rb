@@ -6,7 +6,8 @@ class Coupon < ApplicationRecord
   validates :enabled?, presence: true
   validates_numericality_of :amount_off, greater_than: 0, :unless => :percent_off
   validates_numericality_of :percent_off, greater_than: 0, less_than: 100, :unless => :amount_off
-
+  validates_uniqueness_of :name
+  
   # def toggle_off
   #   #binding.pry
   #   self.update(enabled?: !enabled?)

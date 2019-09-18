@@ -6,6 +6,7 @@ describe Coupon, type: :model do
     # it {should validate_presence_of :percent_off , :unless => :amount_off}
     # it {should validate_presence_of :amount_off , :unless => :percent_off}
     it {should validate_presence_of(:enabled?)}
+    it {should validate_uniqueness_of(:name)}
 
     context "if coupon is a dollar amount off" do
       before { allow(subject).to receive(:percent_off).and_return(nil) }
