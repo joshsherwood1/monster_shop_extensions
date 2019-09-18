@@ -1,0 +1,22 @@
+<h2>Coupon Management Center</h2>
+<% @merchant.coupons.each do |coupon| %>
+<section id="coupon-<%=coupon.id%>">
+  Coupon Code: <%= coupon.name %>
+  <% if coupon.amount_off != nil  %>
+    <p>Discount: $<%= coupon.amount_off.round(0) %> off Bike Shop subtotal in cart</p>
+  <% end %>
+  <% if coupon.percent_off != nil  %>
+    <p>Discount: <%= number_to_percentage(coupon.percent_off, precision: 0) %> off Bike Shop subtotal in cart </p>
+  <% end %>
+  <%= link_to "Edit Coupon", "/merchant/coupons/#{coupon.id}/edit" %>
+  <%= link_to "Delete Coupon", "/merchant/coupons/#{coupon.id}", method: :delete %>
+  <% if coupon.enabled? %>
+    <%= link_to 'Disable Coupon', "/merchant/coupons/#{coupon.id}/toggle", method: :patch %>
+  <% else !coupon.enabled? %>
+    <%= link_to 'Enable Coupon', "/merchant/coupons/#{coupon.id}/toggle", method: :patch %>
+  <% end %>
+</section>
+<br>__________________________________<br><br>
+<% end %>
+
+<%= link_to "Add Coupon", "/merchant/coupons/new" %>

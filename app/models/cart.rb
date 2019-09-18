@@ -32,6 +32,13 @@ class Cart
     end
   end
 
+  # def total_for_merchant_with_coupon_code
+  #   @contents.sum do |item_id,quantity|
+  #     if Item.find(item_id).merchant.id == current_user.merchant.id
+  #     Item.find(item_id).price * quantity
+  #   end
+  # end
+
   def add_quantity(item_id)
     @contents[item_id] += 1
   end

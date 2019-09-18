@@ -26,4 +26,5 @@ class ApplicationController < ActionController::Base
   def cart
     @cart ||= Cart.new(session[:cart] ||= Hash.new(0))
   end
+
 end
