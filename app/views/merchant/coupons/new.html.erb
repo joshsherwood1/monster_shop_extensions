@@ -1,0 +1,14 @@
+<h1 align= "center">Create a Coupon</h1>
+<center>
+  <%= form_tag "/merchant/coupons", method: :post do |f| %>
+    <%= label_tag "Coupon Code"%>
+    <%= text_field_tag :name %>
+    <%= label_tag :amount_off%>
+    <%= text_field_tag :amount_off %>
+    <h3>OR</h3>
+    <%= label_tag :percent_off%>
+    <%= text_field_tag :percent_off %>
+
+    <%= submit_tag 'Create Coupon' %>
+  <% end %>
+</center>

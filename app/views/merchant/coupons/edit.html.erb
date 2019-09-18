@@ -1,0 +1,14 @@
+<h1 align= "center">Edit a Coupon</h1>
+<center>
+  <%= form_tag "/merchant/coupons/#{@coupon.id}", method: :patch do |f| %>
+    <%= label_tag "Coupon Code"%>
+    <%= text_field_tag :name, "#{@coupon.name}" %>
+    <%= label_tag :amount_off%>
+    <%= text_field_tag :amount_off, "#{@coupon.amount_off}" %>
+    <h3>OR</h3>
+    <%= label_tag :percent_off%>
+    <%= text_field_tag :percent_off, "#{@coupon.percent_off}" %>
+
+    <%= submit_tag 'Update Coupon' %>
+  <% end %>
+</center>
