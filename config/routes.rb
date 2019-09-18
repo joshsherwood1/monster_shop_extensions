@@ -64,7 +64,8 @@ Rails.application.routes.draw do
     get '/orders/:order_id', to: "orders#show"
     resources :items
     patch '/itemorders/:id/fulfill', to: "itemorders#fulfill"
-    resources :coupons, only: [:index]
+    resources :coupons, only: [:index, :new, :create, :edit, :update, :destroy]
+    patch "/coupons/:id/toggle", to: "coupons#toggle_coupon"
   end
 
   namespace :user do
