@@ -13,6 +13,7 @@ class Merchant::CouponsController < Merchant::BaseController
     if ((coupon_params[:amount_off] == "") == false) && ((coupon_params[:percent_off] == "") == false)
       flash[:error] = "Please choose only a percent off or amount off"
       render :new
+      coupon.destroy
     elsif coupon.save
       redirect_to "/merchant/coupons"
     else
