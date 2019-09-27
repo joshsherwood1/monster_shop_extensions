@@ -22,7 +22,7 @@ class User < ApplicationRecord
   end
 
   def addresses_except_order_address(order_address_id)
-    self.addresses.where("id != #{order_address_id}")
+    self.addresses.where.not(id: order_address_id)
   end
 
 end
