@@ -3,7 +3,7 @@ BE Mod 2 Week 6 Individual Project
 
 
 ## Background and Description
-In this project, I added additional functionalities to an existing repo (i.e., a fictitious e-commerce platform called [little_shop](https://github.com/turingschool-examples/little_shop_1906) built with Rails) that mimic online transactions.
+In this project, I added additional functionalities to an existing repo (i.e., a fictitious e-commerce platform called [original monster_shop](https://github.com/joshsherwood1/monster_shop) built with Rails).
 
 Monster Shop allows different types of users can log in and have access to different functionality. All user types have access to certain CRUD functionality for different resources. For example, regular users can add items to the cart, create orders, and cancel orders; admin users can enable and disable merchants and their items and ship orders that have been packaged. Ruby on Rails framework is used to build the application. ActiveRecord is used to make database inquiries. PostgreSQL is used to build the database.
 
@@ -16,10 +16,9 @@ The project demonstrates the following concepts:
 - Create one-to-many & many-to-many relationships between two tables
 - Use grouping and aggregate functions with SQL and ActiveRecord to obtain specific information from database
 - Use authentication and authorization to verify users and give certain users access to certain functionality
-- Add namespace and resource syntax in routes file
-- Use form helper form_for to create forms
 - User password encryption to hash user passwords before storing in the database
 - Registered users have one or more addresses associated with their profile and need an address to check out
+- Address can be changed on order page after order has been placed until an admin has shipped an order
 
 Below is a snapshot of the project database via active designer (showing different types of relationships)
 
