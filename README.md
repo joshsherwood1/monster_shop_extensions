@@ -16,7 +16,6 @@ The project demonstrates the following concepts:
 - Create one-to-many & many-to-many relationships between two tables
 - Use grouping and aggregate functions with SQL and ActiveRecord to obtain specific information from database
 - Use authentication and authorization to verify users and give certain users access to certain functionality
-- User password encryption to hash user passwords before storing in the database
 - Registered users have one or more addresses associated with their profile and need an address to check out
 - Address can be changed on order page after order has been placed until an admin has shipped an order
 
