@@ -3,9 +3,9 @@ BE Mod 2 Week 6 Individual Project
 
 
 ## Background and Description
-In this project, I added additional functionalities to an existing repo (i.e., a fictitious e-commerce platform called [original monster_shop](https://github.com/joshsherwood1/monster_shop) built with Rails).
+In this project, I added additional functionalities to an existing repo ([original monster_shop](https://github.com/joshsherwood1/monster_shop) built with Rails).
 
-Monster Shop allows different types of users can log in and have access to different functionality. All user types have access to certain CRUD functionality for different resources. For example, regular users can add items to the cart, create orders, and cancel orders; admin users can enable and disable merchants and their items and ship orders that have been packaged. Ruby on Rails framework is used to build the application. ActiveRecord is used to make database inquiries. PostgreSQL is used to build the database.
+Monster Shop a fictitious e-commerce platform and allows different types of users can log in and have access to different functionality. All user types have access to certain CRUD functionality for different resources. For example, regular users can add items to the cart, create orders, and cancel orders; admin users can enable and disable merchants and their items and ship orders that have been packaged. Ruby on Rails framework is used to build the application. ActiveRecord is used to make database inquiries. PostgreSQL is used to build the database.
 
 
 ## Required functionalities
