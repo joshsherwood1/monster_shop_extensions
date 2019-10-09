@@ -36,6 +36,6 @@ Below is a snapshot of the project database via active designer (showing differe
 ## Website
    View the project at https://boiling-brook-97690.herokuapp.com/
    
-   - To log in as a regular user, simply register for a new account
+   - To log in as a regular user, simply register for a new account or use username: 5@gmail.com & password: password
    - To log in as a merchant user, use username: 7@gmail.com & password: password
    - To log in as an admin user, use username: 8@gmail.com & password: password
