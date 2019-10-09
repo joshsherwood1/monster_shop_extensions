@@ -1,6 +1,10 @@
 # Monster Shop Extensions
 BE Mod 2 Week 6 Individual Project
 
+This application uses:
+- Ruby 2.4.1
+- Rails 5.1.7
+
 
 ## Background and Description
 In this project, I added additional functionalities to an existing repo ([original monster_shop](https://github.com/joshsherwood1/monster_shop) built with Rails).
